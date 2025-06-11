@@ -26,7 +26,7 @@ return {
 	config = function()
 		local dap = require("dap")
 		local dapui = require("dapui")
-		local dap_virtual_text = require("nvim-dap-virtual-text")
+		-- local dap_virtual_text = require("nvim-dap-virtual-text")
 
 		-- Install golang specific config
 		require("dap-go").setup()

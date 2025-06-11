@@ -5,14 +5,14 @@
 
 return {
 	-- {
-	--   'iamcco/markdown-preview.nvim',
-	--   build = function()
-	--     vim.fn['mkdp#util#install']()
-	--   end,
-	--   config = function()
-	--     vim.g.mkdp_browser = '/usr/bin/firefox'
-	--   end,
-	--   ft = { 'markdown' },
+	-- 	"iamcco/markdown-preview.nvim",
+	-- 	build = function()
+	-- 		vim.fn["mkdp#util#install"]()
+	-- 	end,
+	-- 	config = function()
+	-- 		vim.g.mkdp_browser = "/usr/bin/vivaldi"
+	-- 	end,
+	-- 	ft = { "markdown" },
 	-- },
 
 	{
@@ -21,13 +21,13 @@ return {
 			require("nvim-autopairs").setup({})
 		end,
 	},
-	{
-		-- amongst your other plugins
-		"akinsho/toggleterm.nvim",
-		version = "*",
-		config = true,
-		-- or
-	},
+	-- {
+	-- 	-- amongst your other plugins
+	-- 	"akinsho/toggleterm.nvim",
+	-- 	version = "*",
+	-- 	config = true,
+	-- 	-- or
+	-- },
 	{
 		"eandrju/cellular-automaton.nvim",
 	},
