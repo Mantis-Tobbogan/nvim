@@ -38,6 +38,9 @@ function M.config()
 
 		-- Code actions (requires gitsigns.nvim)
 		b.code_actions.gitsigns,
+
+		-- Go
+		b.diagnostics.golangci_lint,
 	}
 
 	-- none-ls setup
@@ -80,17 +83,17 @@ function M.setup_ruff_lsp()
 			client.server_capabilities.hoverProvider = false
 
 			-- Format on save
-			if client.supports_method("textDocument/formatting") then
-				vim.api.nvim_clear_autocmds({ group = "RuffFormat", buffer = bufnr })
-				vim.api.nvim_create_augroup("RuffFormat", { clear = false })
-				vim.api.nvim_create_autocmd("BufWritePre", {
-					group = "RuffFormat",
-					buffer = bufnr,
-					callback = function()
-						vim.lsp.buf.format({ bufnr = bufnr, name = "ruff_lsp" })
-					end,
-				})
-			end
+			-- if client.supports_method("textDocument/formatting") then
+			-- 	vim.api.nvim_clear_autocmds({ group = "RuffFormat", buffer = bufnr })
+			-- 	vim.api.nvim_create_augroup("RuffFormat", { clear = false })
+			-- 	vim.api.nvim_create_autocmd("BufWritePre", {
+			-- 		group = "RuffFormat",
+			-- 		buffer = bufnr,
+			-- 		callback = function()
+			-- 			vim.lsp.buf.format({ bufnr = bufnr, name = "ruff_lsp" })
+			-- 		end,
+			-- 	})
+			-- end
 		end,
 	})
 end

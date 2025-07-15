@@ -1,4 +1,4 @@
--- --"folke/tokyonight.nvim",
+--"folke/tokyonight.nvim",
 -- local M = {
 -- 	lazy = false,
 -- 	priority = 1000,

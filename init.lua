@@ -68,7 +68,7 @@ vim.o.undodir = os.getenv("HOME") .. "/.vim/undodir"
 
 ---- Enable break indent
 --vim.o.breakindent = false
---vim.o.smartindent = true
+vim.o.smartindent = true
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = "menuone,noselect"
@@ -84,8 +84,44 @@ vim.o.termguicolors = true
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
-vim.keymap.set("n", "<leader>l", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+
+-- Toggle LSP diagnostic float window
+local function toggle_diagnostic_float()
+	-- Check if a diagnostic float is already open
+	-- local current_win = vim.api.nvim_get_current_win()
+	for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+		local config = vim.api.nvim_win_get_config(win)
+		if config.relative ~= "" then
+			-- It's a floating window
+			vim.api.nvim_win_close(win, true)
+			return
+		end
+	end
+	-- Otherwise, open the float
+	vim.diagnostic.open_float(nil, { focus = false, scope = "line" })
+end
+
+vim.keymap.set("n", "<leader>l", toggle_diagnostic_float, { desc = "Toggle diagnostic float" })
+
+-- Toggle diagnostic location list
+local function toggle_loclist()
+	-- Check if location list is open
+	local loclist_open = false
+	for _, win in ipairs(vim.fn.getwininfo()) do
+		if win.loclist == 1 then
+			loclist_open = true
+			break
+		end
+	end
+
+	if loclist_open then
+		vim.cmd("lclose")
+	else
+		vim.diagnostic.setloclist({ open = true })
+	end
+end
+
+vim.keymap.set("n", "<leader>q", toggle_loclist, { desc = "Toggle diagnostic location list" })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -98,6 +134,15 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
 	callback = function()
 		vim.highlight.on_yank()
+	end,
+})
+
+-- Associate .gohtml files with html filetype
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+	group = vim.api.nvim_create_augroup("gohtml_filetype", { clear = true }),
+	pattern = "*.gohtml",
+	callback = function()
+		vim.bo.filetype = "html"
 	end,
 })
 
@@ -166,16 +211,6 @@ require("lazy").setup({
 				)
 			end,
 		},
-	},
-
-	--TODO: I'm gonna change this and keep in personal config. Not here in init.lua
-	{
-		-- Theme inspired by Atom
-		"navarasu/onedark.nvim",
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("onedark")
-		end,
 	},
 
 	{
@@ -455,27 +490,21 @@ require("lazy").setup({
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local servers = {
 				-- clangd = {},
-				gopls = {},
 				pyright = {
 					settings = {
-						pyright = {
-							disableLanguageServices = false,
-							disableOrganizeImports = true,
-							openFilesOnly = true,
-						},
 						python = {
 							analysis = {
-								autoImportCompletions = false,
+								autoImportCompletions = true, -- Enable auto-import completions like in VSCode
 								autoSearchPath = true,
-								diagnosticMode = "workspace",
-								typeCheckingMode = "basic",
+								diagnosticMode = "workspace", -- or "openFilesOnly"
+								typeCheckingMode = "basic", -- Can be "off", "basic", or "strict"
 								useLibraryCodeForTypes = true,
-								reportGeneralTypeIssues = "basic",
+								-- Diagnostic settings
 								diagnosticSeverityOverrides = {
-									reportGeneralTypeIssues = false,
-									reportCallIssue = false,
-									reportInvalidTypeArguments = "none",
-									reportArgumentType = false,
+									reportGeneralTypeIssues = "error",
+									reportCallIssue = "error",
+									reportInvalidTypeArguments = "error",
+									reportArgumentType = "error",
 								},
 							},
 						},
@@ -490,6 +519,9 @@ require("lazy").setup({
 				-- But for many setups, the LSP (`tsserver`) will work just fine
 				-- tsserver = {},
 				--
+
+				-- Go
+				gopls = {},
 
 				lua_ls = {
 					-- cmd = {...},
@@ -532,6 +564,8 @@ require("lazy").setup({
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format lua code
+				"gofumpt",
+				"golangci-lint",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -582,13 +616,25 @@ require("lazy").setup({
 				timeout_ms = 500,
 				lsp_fallback = true,
 			},
+			-- To disable removing unused imports, we use ruff's check --fix command
+			-- but ignore the F401 rule (unused import).
+			-- Ruff will still handle formatting and other lint fixes.
+			formatters = {
+				ruff_fix_custom = {
+					command = "ruff",
+					args = { "check", "--fix", "--ignore", "F401", "--stdin-filename", "$FILENAME", "-" },
+					stdin = true,
+				},
+			},
 			formatters_by_ft = {
 				lua = { "stylua" },
-				--Conform can also run multiple formatters sequentially
-				python = { "isort", "ruff" },
+				-- Conform can also run multiple formatters sequentially
+				-- We use our custom ruff configuration. isort is no longer needed.
+				python = { "ruff_fix_custom" },
 				--
 				-- You can use a sub-list to tell conform to run *until* a formatter
 				-- is found.
+				go = { "gofmt" },
 				javascript = { { "prettierd", "prettier" } },
 				markdown = { { "prettier", "prettierd" } },
 			},
@@ -722,7 +768,19 @@ require("lazy").setup({
 
 			---@diagnostic disable-next-line: missing-fields
 			require("nvim-treesitter.configs").setup({
-				ensure_installed = { "bash", "c", "html", "lua", "markdown", "vim", "vimdoc" },
+				ensure_installed = {
+					"bash",
+					"c",
+					"html",
+					"lua",
+					"markdown",
+					"vim",
+					"vimdoc",
+					"python",
+					"toml",
+					"go",
+					"gomod",
+				},
 				-- Autoinstall languages that are not installed
 				auto_install = true,
 				highlight = { enable = true },
