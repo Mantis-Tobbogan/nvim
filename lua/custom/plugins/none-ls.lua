@@ -41,6 +41,9 @@ function M.config()
 
 		-- Go
 		b.diagnostics.golangci_lint,
+
+		-- Python
+		b.diagnostics.ruff,
 	}
 
 	-- none-ls setup
@@ -57,7 +60,9 @@ function M.config()
 					group = augroup,
 					buffer = bufnr,
 					callback = function()
+						local view = vim.fn.winsaveview()
 						vim.lsp.buf.format({ bufnr = bufnr })
+						vim.fn.winrestview(view)
 					end,
 				})
 			end
@@ -66,36 +71,4 @@ function M.config()
 end
 
 -- Separate Ruff LSP configuration (should be in a separate file or LSP config)
-function M.setup_ruff_lsp()
-	local lspconfig = require("lspconfig")
-	lspconfig.ruff_lsp.setup({
-		init_options = {
-			settings = {
-				args = {
-					"--config=" .. vim.fn.expand("~/.config/ruff.toml"),
-					"--line-length=120",
-					"--select=B,C,E,F,W,T4,B9,I001",
-				},
-			},
-		},
-		on_attach = function(client, bufnr)
-			-- Disable hover in favor of other LSPs (like pyright)
-			client.server_capabilities.hoverProvider = false
-
-			-- Format on save
-			-- if client.supports_method("textDocument/formatting") then
-			-- 	vim.api.nvim_clear_autocmds({ group = "RuffFormat", buffer = bufnr })
-			-- 	vim.api.nvim_create_augroup("RuffFormat", { clear = false })
-			-- 	vim.api.nvim_create_autocmd("BufWritePre", {
-			-- 		group = "RuffFormat",
-			-- 		buffer = bufnr,
-			-- 		callback = function()
-			-- 			vim.lsp.buf.format({ bufnr = bufnr, name = "ruff_lsp" })
-			-- 		end,
-			-- 	})
-			-- end
-		end,
-	})
-end
-
 return M

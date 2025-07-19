@@ -179,7 +179,7 @@ require("lazy").setup({
 
 	----Useful status updates for LSP
 	----NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-	--{ 'j-hui/fidget.nvim',       opts = {} },
+	{ "j-hui/fidget.nvim", opts = {} },
 
 	-- Useful plugin to show you pending keybinds.
 	{ "folke/which-key.nvim", opts = {} },
@@ -220,7 +220,7 @@ require("lazy").setup({
 		opts = {
 			options = {
 				icons_enabled = true,
-				theme = "rose-pine",
+				-- theme = "rose-pine",
 				component_separators = "|",
 				section_separators = "",
 			},
@@ -301,11 +301,11 @@ require("lazy").setup({
 				-- You can put your default mappings / updates / etc. in here
 				--  All the info you're looking for is in `:help telescope.setup()`
 				--
-				-- defaults = {
-				--   mappings = {
-				--     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-				--   },
-				-- },
+				defaults = {
+					mappings = {
+						i = { ["<c-enter>"] = "to_fuzzy_refine" },
+					},
+				},
 				-- pickers = {}
 				extensions = {
 					["ui-select"] = {
@@ -521,7 +521,18 @@ require("lazy").setup({
 				--
 
 				-- Go
-				gopls = {},
+				gopls = {
+					settings = {
+						gopls = {
+							analyses = {
+								unusedparams = true,
+							},
+							staticcheck = true,
+							usePlaceholders = true,
+							gofumpt = true,
+						},
+					},
+				},
 
 				lua_ls = {
 					-- cmd = {...},
@@ -564,6 +575,8 @@ require("lazy").setup({
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format lua code
+				"ruff",
+				"goimports",
 				"gofumpt",
 				"golangci-lint",
 			})
@@ -634,7 +647,7 @@ require("lazy").setup({
 				--
 				-- You can use a sub-list to tell conform to run *until* a formatter
 				-- is found.
-				go = { "gofmt" },
+				go = { "goimports" },
 				javascript = { { "prettierd", "prettier" } },
 				markdown = { { "prettier", "prettierd" } },
 			},
@@ -748,6 +761,9 @@ require("lazy").setup({
 			vim.cmd.colorscheme("tokyonight-night")
 
 			-- You can configure highlights by doing something like
+			vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+			vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+			vim.api.nvim_set_hl(0, "CursorLine", { bg = "none" })
 			vim.cmd.hi("Comment gui=none")
 		end,
 	},
@@ -837,6 +853,15 @@ require("lazy").setup({
 			--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
 			--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
 			--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+		end,
+	},
+
+	-- Sticky scroll like in VSCode
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		config = function()
+			require("treesitter-context").setup({})
+			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "none" })
 		end,
 	},
 
