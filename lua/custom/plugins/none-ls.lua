@@ -28,8 +28,6 @@ function M.config()
 				"vue",
 			},
 		}),
-		b.formatting.remark, -- Markdown
-
 		-- Spellcheck
 		b.completion.spell,
 
@@ -42,8 +40,8 @@ function M.config()
 		-- Go
 		b.diagnostics.golangci_lint,
 
-		-- Python
-		b.diagnostics.ruff,
+		-- -- Python
+		-- b.diagnostics.ruff,
 	}
 
 	-- none-ls setup
