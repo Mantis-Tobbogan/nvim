@@ -137,21 +137,32 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
--- Associate .gohtml files with html filetype
+-- Associate various template files with html filetype
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-	group = vim.api.nvim_create_augroup("gohtml_filetype", { clear = true }),
-	pattern = "*.gohtml",
+	group = vim.api.nvim_create_augroup("html_template_filetypes", { clear = true }),
+	pattern = { "*.gohtml", "*.jinja", "*.mustache", "*.hbs", "*.tmpl", "*.tpl" },
 	callback = function()
 		vim.bo.filetype = "html"
 	end,
 })
 
+-- Set tabstop for HTML files
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "html",
+	callback = function()
+		vim.bo.tabstop = 2
+		vim.bo.softtabstop = 2
+		vim.bo.shiftwidth = 2
+		vim.bo.expandtab = true
+	end,
+})
+
 -- Set relative line numbers for mason
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'mason',
-  callback = function()
-    vim.wo.relativenumber = true
-  end,
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "mason",
+	callback = function()
+		vim.wo.relativenumber = true
+	end,
 })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
@@ -279,7 +290,7 @@ require("lazy").setup({
 		opts = {
 			options = {
 				icons_enabled = true,
-				-- theme = "rose-pine",
+				-- theme = "kanagawa",
 				component_separators = "|",
 				section_separators = "",
 			},
@@ -637,6 +648,7 @@ require("lazy").setup({
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format lua code
+				"jsonlint",
 				"ruff",
 				"goimports",
 				"gofumpt",
@@ -710,9 +722,7 @@ require("lazy").setup({
 				-- You can use a sub-list to tell conform to run *until* a formatter
 				-- is found.
 				go = { "goimports" },
-				-- javascript = { { "prettierd", "prettier" } },
-				-- markdown = { { "prettier", "prettierd" } },
-				javascript = { "prettier" },
+				javascript = { "prettierd" },
 				markdown = { "prettierd" },
 			},
 		},
@@ -818,10 +828,22 @@ require("lazy").setup({
 						end
 					end, { "i", "s" }),
 				}),
-				sources = {
-					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
+				sources = cmp.config.sources({
+					{ name = "nvim_lsp", priority = 1000 },
+					{ name = "luasnip", priority = 750 },
 					-- { name = "path" },
+				}),
+				sorting = {
+					priority_weight = 2,
+					comparators = {
+						cmp.config.compare.offset,
+						cmp.config.compare.exact,
+						cmp.config.compare.recently_used,
+						cmp.config.compare.kind,
+						cmp.config.compare.sort_text,
+						cmp.config.compare.length,
+						cmp.config.compare.order,
+					},
 				},
 			})
 		end,
@@ -833,18 +855,18 @@ require("lazy").setup({
 		--
 		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
 		"folke/tokyonight.nvim",
-		priority = 1000, -- make sure to load this before all the other start plugins
+		-- priority = 1000, -- make sure to load this before all the other start plugins
 		init = function()
 			-- Load the colorscheme here.
 			-- Like many other themes, this one has different styles, and you could load
 			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
 			vim.cmd.colorscheme("tokyonight-night")
 
-			-- You can configure highlights by doing something like
-			vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-			vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-			vim.api.nvim_set_hl(0, "CursorLine", { bg = "none" })
-			vim.cmd.hi("Comment gui=none")
+			-- -- You can configure highlights by doing something like
+			-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+			-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+			-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "none" })
+			-- vim.cmd.hi("Comment gui=none")
 		end,
 	},
 
@@ -915,13 +937,12 @@ require("lazy").setup({
 					"go",
 					"gomod",
 					"json",
-					"typescript",
 				},
 				-- Autoinstall languages that are not installed
 				auto_install = true,
 				highlight = { enable = true },
 				indent = { enable = true },
-				
+
 				textobjects = {
 					select = {
 						enable = true,
@@ -981,15 +1002,6 @@ require("lazy").setup({
 		"windwp/nvim-ts-autotag",
 		config = function()
 			require("nvim-ts-autotag").setup()
-		end,
-	},
-
-	-- Sticky scroll like in VSCode
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-		config = function()
-			require("treesitter-context").setup({})
-			vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "none" })
 		end,
 	},
 

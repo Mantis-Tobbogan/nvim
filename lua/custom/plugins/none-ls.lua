@@ -20,6 +20,7 @@ function M.config()
 			filetypes = {
 				"html",
 				"json",
+				"jsonc",
 				"yaml",
 				"markdown",
 				"css",
@@ -28,6 +29,7 @@ function M.config()
 				"vue",
 			},
 		}),
+		-- b.diagnostics.jsonlint,
 		-- Spellcheck
 		b.completion.spell,
 
@@ -49,7 +51,8 @@ function M.config()
 		debug = false,
 		sources = sources,
 		on_attach = function(client, bufnr)
-			if client.supports_method("textDocument/formatting") then
+			-- if client.supports_method("textDocument/formatting") then
+			if client:supports_method("textDocument/formatting") then
 				-- Create the augroup first, then clear any existing autocmds for this buffer
 				local augroup = vim.api.nvim_create_augroup("LspFormat", { clear = false })
 				vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
