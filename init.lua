@@ -133,7 +133,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
 	callback = function()
-		vim.highlight.on_yank()
+		vim.hl.on_yank()
 	end,
 })
 
@@ -324,7 +324,7 @@ require("lazy").setup({
 	{ -- Fuzzy Finder (files, lsp, etc)
 		"nvim-telescope/telescope.nvim",
 		event = "VimEnter",
-		branch = "0.1.x",
+		tag = "0.1.8",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{ -- If encountering errors, see telescope-fzf-native README for install instructions
@@ -516,8 +516,12 @@ require("lazy").setup({
 
 					-- Opens a popup that displays documentation about the word under your cursor
 					--  See `:help K` for why this keymap
-					-- TODO: I will need to change this to Ctrl+K i to be the same as VsCode
-					map("K", vim.lsp.buf.hover, "Hover Documentation")
+					map("K", function()
+						vim.lsp.buf.hover({
+							border = "rounded",
+							winblend = 20, -- 20% opacity (100 - 20 = 80)
+						})
+					end, "Hover Documentation")
 
 					--  For example, in C this would take you to the header
 					map("gD", vim.lsp.buf.declaration, "Goto Declaration")
@@ -547,7 +551,8 @@ require("lazy").setup({
 			--  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
 			--  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+			-- capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+			capabilities = require("blink.cmp").get_lsp_capabilities()
 
 			-- Enable the following language servers
 			--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -607,6 +612,7 @@ require("lazy").setup({
 					},
 				},
 
+				-- Lua
 				lua_ls = {
 					-- cmd = {...},
 					-- filetypes { ...},
@@ -685,13 +691,6 @@ require("lazy").setup({
 					suffix = "",
 				},
 			})
-			vim.lsp.handlers["textdocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-				border = "rounded",
-			})
-
-			vim.lsp.handlers["textdocument/signaturehelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-				border = "rounded",
-			})
 		end,
 	},
 	-- NOTE: I am using null-ls for this. Maybe I will change it later
@@ -722,151 +721,137 @@ require("lazy").setup({
 				-- You can use a sub-list to tell conform to run *until* a formatter
 				-- is found.
 				go = { "goimports" },
-				javascript = { "prettierd" },
-				markdown = { "prettierd" },
+				javascript = { "prettier" },
+				markdown = { "prettier" },
 			},
 		},
 	},
 
 	{ -- Autocompletion
-		"hrsh7th/nvim-cmp",
-		-- event = "InsertEnter",
-		event = "VimEnter",
-		-- "saghen/blink.cmp",
-		-- event = "VimEnter",
+		"saghen/blink.cmp",
+		-- build = "cargo build --release",
+		version = "1.*",
+		event = { "InsertEnter", "CmdlineEnter" },
 		dependencies = {
-			-- Snippet Engine & its associated nvim-cmp source
 			{
 				"L3MON4D3/LuaSnip",
 				version = "2.*",
 				build = (function()
-					-- Build Step is needed for regex support in snippets
-					-- This step is not supported in many windows environments
-					-- Remove the below condition to re-enable on windows
 					if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
 						return
 					end
 					return "make install_jsregexp"
 				end)(),
-				dependencies = {
-					-- `friendly-snippets` contains a variety of premade snippets.
-					--    See the README about individual language/framework/plugin snippets:
-					--    https://github.com/rafamadriz/friendly-snippets
-					-- {
-					--   'rafamadriz/friendly-snippets',
-					--   config = function()
-					--     require('luasnip.loaders.from_vscode').lazy_load()
-					--   end,
-					-- },
-				},
-				opts = {},
 			},
-			-- "saadparwaiz1/cmp_luasnip",
-
-			-- Adds other completion capabilities.
-			--  nvim-cmp does not ship with all sources by default. They are split
-			--  into multiple repos for maintenance purposes.
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-path",
-
-			-- If you want to add a bunch of pre-configured snippets,
-			--    you can use this plugin to help you. It even has snippets
-			--    for various frameworks/libraries/etc. but you will have to
-			--    set up the ones that are useful for you.
-			-- 'rafamadriz/friendly-snippets',
 		},
 		config = function()
-			-- See `:help cmp`
-			local cmp = require("cmp")
+			local blink = require("blink.cmp")
 			local luasnip = require("luasnip")
 			luasnip.config.setup({})
 
-			cmp.setup({
-				snippet = {
-					expand = function(args)
-						luasnip.lsp_expand(args.body)
-					end,
+			blink.setup({
+				snippets = {
+					preset = "luasnip",
 				},
-				completion = { completeopt = "menu,menuone,noinsert" },
-
-				-- For an understanding of why these mappings were
-				-- chosen, you will need to read `:help ins-completion`
-				--
-				-- No, but seriously. Please read `:help ins-completion`, it is really good!
-				mapping = cmp.mapping.preset.insert({
-					-- Select the [n]ext item
-					["<C-n>"] = cmp.mapping.select_next_item(),
-					-- Select the [p]revious item
-					["<C-p>"] = cmp.mapping.select_prev_item(),
-
-					-- Accept ([y]es) the completion.
-					--  This will auto-import if your LSP supports it.
-					--  This will expand snippets if the LSP sent a snippet.
-					["<C-y>"] = cmp.mapping.confirm({ select = true }),
-
-					-- Manually trigger a completion from nvim-cmp.
-					--  Generally you don't need this, because nvim-cmp will display
-					--  completions whenever it has completion options available.
-					["<C-Space>"] = cmp.mapping.complete({}),
-
-					-- Think of <c-l> as moving to the right of your snippet expansion.
-					--  So if you have a snippet that's like:
-					--  function $name($args)
-					--    $body
-					--  end
-					--
-					-- <c-l> will move you to the right of each of the expansion locations.
-					-- <c-h> is similar, except moving you backwards.
-					["<C-l>"] = cmp.mapping(function()
-						if luasnip.expand_or_locally_jumpable() then
-							luasnip.expand_or_jump()
-						end
-					end, { "i", "s" }),
-					["<C-h>"] = cmp.mapping(function()
-						if luasnip.locally_jumpable(-1) then
-							luasnip.jump(-1)
-						end
-					end, { "i", "s" }),
-				}),
-				sources = cmp.config.sources({
-					{ name = "nvim_lsp", priority = 1000 },
-					{ name = "luasnip", priority = 750 },
-					-- { name = "path" },
-				}),
-				sorting = {
-					priority_weight = 2,
-					comparators = {
-						cmp.config.compare.offset,
-						cmp.config.compare.exact,
-						cmp.config.compare.recently_used,
-						cmp.config.compare.kind,
-						cmp.config.compare.sort_text,
-						cmp.config.compare.length,
-						cmp.config.compare.order,
+				keymap = {
+					preset = "default",
+					["<C-n>"] = { "select_next", "fallback" },
+					["<C-p>"] = { "select_prev", "fallback" },
+					["<C-y>"] = { "accept", "fallback" },
+					["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+					["<C-l>"] = { "snippet_forward", "fallback" },
+					["<C-h>"] = { "snippet_backward", "fallback" },
+				},
+				sources = {
+					default = { "lsp", "path", "snippets" },
+					providers = {
+						lsp = {
+							name = "LSP",
+							module = "blink.cmp.sources.lsp",
+						},
+						path = {
+							name = "Path",
+							module = "blink.cmp.sources.path",
+							score_offset = -3,
+						},
+						snippets = {
+							name = "Snippets",
+							module = "blink.cmp.sources.snippets",
+							score_offset = -1,
+						},
 					},
 				},
+				completion = {
+					accept = {
+						auto_brackets = {
+							enabled = true,
+						},
+					},
+					menu = {
+						enabled = true,
+						min_width = 15,
+						max_height = 10,
+						border = "shadow",
+						winblend = 15, -- Add transparency
+						winhighlight = "Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
+						scrolloff = 2,
+						scrollbar = true,
+						direction_priority = { "s", "n" },
+						auto_show = true,
+						draw = {
+							columns = {
+								{ "kind_icon", "label", gap = 1 },
+								{ "kind" },
+							},
+						},
+					},
+					documentation = {
+						auto_show = true,
+						auto_show_delay_ms = 500,
+						update_delay_ms = 50,
+						treesitter_highlighting = true,
+						window = {
+							min_width = 10,
+							max_width = 80,
+							max_height = 20,
+							border = "rounded",
+							winblend = 10, -- Add transparency
+							winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,EndOfBuffer:BlinkCmpDoc",
+							scrollbar = true,
+							direction_priority = {
+								menu_north = { "e", "w", "n", "s" },
+								menu_south = { "e", "w", "s", "n" },
+							},
+						},
+					},
+					ghost_text = {
+						enabled = true,
+						show_with_selection = true,
+						show_without_selection = false,
+						show_with_menu = true,
+						show_without_menu = false,
+					},
+				},
+				signature = {
+					enabled = true,
+					window = {
+						min_width = 1,
+						max_width = 100,
+						max_height = 10,
+						border = "rounded",
+						winblend = 10, -- Add transparency
+						winhighlight = "Normal:BlinkCmpSignatureHelp,FloatBorder:BlinkCmpSignatureHelpBorder",
+						scrollbar = false,
+						direction_priority = { "n", "s" },
+						treesitter_highlighting = true,
+						show_documentation = true,
+					},
+				},
+				appearance = {
+					use_nvim_cmp_as_default = true,
+					nerd_font_variant = "mono",
+				},
 			})
-		end,
-	},
-
-	{ -- You can easily change to a different colorscheme.
-		-- Change the name of the colorscheme plugin below, and then
-		-- change the command in the config to whatever the name of that colorscheme is
-		--
-		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
-		"folke/tokyonight.nvim",
-		-- priority = 1000, -- make sure to load this before all the other start plugins
-		init = function()
-			-- Load the colorscheme here.
-			-- Like many other themes, this one has different styles, and you could load
-			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-			vim.cmd.colorscheme("tokyonight-night")
-
-			-- -- You can configure highlights by doing something like
-			-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-			-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-			-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "none" })
-			-- vim.cmd.hi("Comment gui=none")
 		end,
 	},
 

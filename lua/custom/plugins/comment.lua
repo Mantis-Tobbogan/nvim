@@ -39,11 +39,11 @@ function M.config()
 	end, { desc = "Toggle comment (visual)" })
 
 	-- VSCode-like block comment toggle (Ctrl+Shift+A)
-	vim.keymap.set("n", "<C-S-A>", function()
+	vim.keymap.set("n", "<C-S-/>", function()
 		api.toggle.blockwise.current()
 	end, { desc = "Toggle block comment (normal)" })
 
-	vim.keymap.set("x", "<C-S-A>", function()
+	vim.keymap.set("x", "<C-S-/>", function()
 		local esc = vim.api.nvim_replace_termcodes("<ESC>", true, false, true)
 		vim.api.nvim_feedkeys(esc, "nx", false)
 		api.toggle.blockwise(vim.fn.visualmode())

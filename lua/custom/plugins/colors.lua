@@ -50,7 +50,7 @@ local M = {
 				local theme = colors.theme
 				-- Helper function to create 10% opacity borders
 				local function blend_border(color)
-					return require("kanagawa.lib.color")(color):blend(theme.ui.bg, 0.1):to_hex()
+					return require("kanagawa.lib.color")(color):blend(theme.ui.bg, 0.4):to_hex()
 				end
 				return {
 					-- Telescope customizations with borders
@@ -95,8 +95,8 @@ local M = {
 					DiagnosticFloatingBorder = { fg = blend_border(theme.ui.bg_p1), bg = "none" }, -- Border for diagnostic floats
 
 					-- Signature help window
-					LspSignatureActiveParameter = { fg = theme.ui.special, bg = theme.ui.bg_p1, bold = true },
-					LspSignatureBorder = { fg = blend_border(theme.ui.bg_p1), bg = "none" }, -- Border for signature help
+					LspSignatureActiveParameter = { fg = theme.ui.special, bg = "#0D0D0D", bold = true },
+					LspSignatureBorder = { fg = blend_border(theme.ui.bg_p1), bg = "#0D0D0D" }, -- Border for signature help
 
 					-- General floating windows
 					NormalFloat = { bg = "none" },
@@ -131,12 +131,6 @@ local M = {
 				light = "lotus", -- Maps to lotus theme for light mode
 			},
 		})
-
-		-- Configure rounded borders for floating windows
-		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-		vim.lsp.handlers["textDocument/signatureHelp"] =
-			vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
-		vim.diagnostic.config({ float = { border = "rounded" } })
 
 		-- Ensure Telescope uses rounded borders
 		require("telescope").setup({

@@ -10,8 +10,8 @@ local M = {
 	vim.keymap.set("n", "n", "nzzzv"),
 	vim.keymap.set("n", "N", "Nzzzv"),
 	vim.keymap.set("n", "<C-l><C-l>", ":set invrelativenumber<CR>"),
-	vim.keymap.set("n", "<leader>bh", "<cmd>bprev<CR>", { desc = "Previous buffer" }),
-	vim.keymap.set("n", "<leader>bl", "<cmd>bnext<CR>", { desc = "Next buffer" }),
+	vim.keymap.set("n", "[b", "<cmd>bprev<CR>", { desc = "Previous buffer" }),
+	vim.keymap.set("n", "]b", "<cmd>bnext<CR>", { desc = "Next buffer" }),
 	vim.keymap.set("n", "<leader>bc", "<cmd>bdelete<CR>", { desc = "Delete current buffer" }),
 
 	--vim.keymap.set("x", "<leader>P", [["_dP]], { desc = "Paste from the clipboard" }),

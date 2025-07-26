@@ -29,9 +29,6 @@ function M.config()
 				"vue",
 			},
 		}),
-		-- b.diagnostics.jsonlint,
-		-- Spellcheck
-		b.completion.spell,
 
 		-- CMake
 		b.formatting.cmake_format,
