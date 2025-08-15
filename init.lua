@@ -572,11 +572,12 @@ require("lazy").setup({
 								autoImportCompletions = true, -- Enable auto-import completions like in VSCode
 								autoSearchPath = true,
 								diagnosticMode = "workspace", -- or "openFilesOnly"
-								typeCheckingMode = "basic", -- Can be "off", "basic", or "strict"
+								typeCheckingMode = "off", -- Can be "off", "basic", or "strict"
 								useLibraryCodeForTypes = true,
 								-- Diagnostic settings
 								diagnosticSeverityOverrides = {
-									reportGeneralTypeIssues = "error",
+									reportGeneralTypeIssues = "information",
+									reportOptionalMemberAccess = "information",
 									reportCallIssue = "error",
 									reportInvalidTypeArguments = "error",
 									reportArgumentType = "error",
@@ -611,6 +612,7 @@ require("lazy").setup({
 						},
 					},
 				},
+				sqlfmt = {},
 
 				-- Lua
 				lua_ls = {

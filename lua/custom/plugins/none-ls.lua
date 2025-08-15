@@ -29,6 +29,8 @@ function M.config()
 				"vue",
 			},
 		}),
+		-- SQL
+		b.formatting.sqlfmt,
 
 		-- CMake
 		b.formatting.cmake_format,
