@@ -41,7 +41,6 @@ local M = {
 	vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true }),
 	vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton game_of_life<CR>"),
 
-	-- From chris@scratcher --
 	-- Stay in visual indent mode
 	vim.keymap.set("v", "<", "<gv", { silent = true }),
 	vim.keymap.set("v", ">", ">gv", { silent = true }),

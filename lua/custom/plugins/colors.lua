@@ -1,13 +1,13 @@
---[[ local M = {
-	"rose-pine/neovim",
-	name = "rose-pine",
-	config = function()
-		Color = Color or "rose-pine"
-		vim.cmd.colorscheme(Color)
-		vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-		vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-	end,
-} ]]
+-- local M = {
+-- 	"rose-pine/neovim",
+-- 	name = "rose-pine",
+-- 	config = function()
+-- 		Color = Color or "rose-pine"
+-- 		vim.cmd.colorscheme(Color)
+-- 		vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+-- 		vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+-- 	end,
+-- }
 
 local M = {
 	"rebelot/kanagawa.nvim",
@@ -125,7 +125,7 @@ local M = {
 					NetrwSymlink = { fg = theme.syn.string, bg = "none" },
 				}
 			end,
-			theme = "dragon", -- Default theme
+			theme = "wave", -- Default theme
 			background = {
 				dark = "wave", -- Maps to wave theme for dark mode, also the option for "Dragon"
 				light = "lotus", -- Maps to lotus theme for light mode
