@@ -346,9 +346,8 @@ require("lazy").setup({
 			end, { desc = "[S]earch [N]eovim files" })
 		end,
 	},
-
 	-- ========================================================================
-	-- LSP CONFIGURATION
+	-- LSP CONFIGURATION (Updated with LSPSaga integration)
 	-- ========================================================================
 
 	{
@@ -357,7 +356,173 @@ require("lazy").setup({
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
-			{ "j-hui/fidget.nvim", opts = {} },
+			-- { "j-hui/fidget.nvim", opts = {} },
+			-- Add LSPSaga as a dependency
+			{
+				"nvimdev/lspsaga.nvim",
+				event = "LspAttach",
+				dependencies = {
+					"nvim-treesitter/nvim-treesitter",
+					"nvim-tree/nvim-web-devicons",
+				},
+				config = function()
+					require("lspsaga").setup({
+						ui = {
+							border = "rounded",
+							devicon = true,
+							title = true,
+							expand = "⊞",
+							collapse = "⊟",
+							code_action = "💡",
+							actionfix = " ",
+							lines = { "┗", "┣", "┃", "━", "┏" },
+							kind = {},
+							imp_sign = "󰳛 ",
+						},
+						hover = {
+							max_width = 0.9,
+							max_height = 0.8,
+							open_link = "gx",
+							open_cmd = "!chrome",
+						},
+						diagnostic = {
+							show_code_action = true,
+							show_layout = "float",
+							show_normal_height = 10,
+							jump_num_shortcut = true,
+							max_width = 0.8,
+							max_height = 0.6,
+							max_show_width = 0.9,
+							max_show_height = 0.6,
+							text_hl_follow = true,
+							border_follow = true,
+							extend_relatedInformation = false,
+							keys = {
+								exec_action = "o",
+								quit = "q",
+								expand_or_jump = "<CR>",
+								quit_in_show = { "q", "<ESC>" },
+							},
+						},
+						code_action = {
+							num_shortcut = true,
+							show_server_name = false,
+							extend_gitsigns = true,
+							only_in_cursor = true,
+							max_height = 0.3,
+							keys = {
+								quit = "q",
+								exec = "<CR>",
+							},
+						},
+						lightbulb = {
+							enable = true,
+							sign = true,
+							debounce = 10,
+							sign_priority = 40,
+							virtual_text = true,
+							enable_in_insert = true,
+						},
+						scroll_preview = {
+							scroll_down = "<C-f>",
+							scroll_up = "<C-b>",
+						},
+						request_timeout = 2000,
+						finder = {
+							max_height = 0.5,
+							left_width = 0.4,
+							methods = {},
+							default = "ref+imp",
+							layout = "float",
+							silent = false,
+							filter = {},
+							fname_sub = nil,
+							sp_inexist = false,
+							sp_global = false,
+							ly_botright = false,
+							keys = {
+								shuttle = "[w",
+								toggle_or_req = "o",
+								vsplit = "s",
+								split = "i",
+								tabe = "t",
+								tabnew = "r",
+								quit = "q",
+								close = "<C-c>k",
+							},
+						},
+						definition = {
+							width = 0.6,
+							height = 0.5,
+							keys = {
+								edit = "<C-c>o",
+								vsplit = "<C-c>v",
+								split = "<C-c>i",
+								tabe = "<C-c>t",
+								tabnew = "<C-c>r",
+								quit = "q",
+								close = "<C-c>k",
+							},
+						},
+						rename = {
+							in_select = true,
+							auto_save = false,
+							project_max_width = 0.5,
+							project_max_height = 0.5,
+							keys = {
+								quit = "<C-k>",
+								exec = "<CR>",
+								select = "x",
+							},
+						},
+						symbol_in_winbar = {
+							enable = true,
+							separator = " › ",
+							hide_keyword = false,
+							show_file = true,
+							folder_level = 1,
+							color_mode = true,
+							dely = 300,
+						},
+						outline = {
+							win_position = "right",
+							win_width = 30,
+							auto_enter = false,
+							auto_preview = true,
+							virt_text = "┃",
+							detail = true,
+							auto_close = true,
+							close_after_jump = false,
+							layout = "normal",
+							max_height = 0.5,
+							left_width = 0.3,
+							keys = {
+								toggle_or_jump = "o",
+								quit = "q",
+								jump = "e",
+							},
+						},
+						callhierarchy = {
+							layout = "float",
+							left_width = 0.2,
+							keys = {
+								edit = "e",
+								vsplit = "s",
+								split = "i",
+								tabe = "t",
+								close = "<C-c>k",
+								quit = "q",
+								shuttle = "[w",
+								toggle_or_req = "u",
+							},
+						},
+						beacon = {
+							enable = true,
+							frequency = 7,
+						},
+					})
+				end,
+			},
 		},
 		config = function()
 			-- LSP Attach Configuration
@@ -368,27 +533,59 @@ require("lazy").setup({
 						keymap("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 					end
 
-					-- Navigation
-					map("gd", require("telescope.builtin").lsp_definitions, "Goto Definition")
-					map("gr", require("telescope.builtin").lsp_references, "Goto References")
-					map("gI", require("telescope.builtin").lsp_implementations, "Goto Implementation")
-					map("gD", vim.lsp.buf.declaration, "Goto Declaration")
-					map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type Definition")
+					-- Navigation - Updated to use LSPSaga for better experience
+					map("gd", "<cmd>Lspsaga goto_definition<CR>", "Goto Definition")
+					map("gr", require("telescope.builtin").lsp_references, "Goto References") -- Keep Telescope for references
+					map("gI", require("telescope.builtin").lsp_implementations, "Goto Implementation") -- Keep Telescope for implementations
+					map("gD", vim.lsp.buf.declaration, "Goto Declaration") -- Keep native for declarations
+					map("<leader>D", "<cmd>Lspsaga goto_type_definition<CR>", "Type Definition")
 
-					-- Symbols
+					-- Symbols - Keep Telescope for these as they work well
 					map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
 					map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
 
-					-- Code Actions
-					map("<leader>rn", vim.lsp.buf.rename, "Rename")
-					map("<leader>ca", vim.lsp.buf.code_action, "Code Action")
+					-- Code Actions - Use LSPSaga for better UI
+					map("<leader>rn", "<cmd>Lspsaga rename<CR>", "Rename")
+					map("<leader>ca", "<cmd>Lspsaga code_action<CR>", "Code Action")
 
-					-- Documentation - Fixed hover configuration
-					map("K", function()
-						vim.lsp.buf.hover()
-					end, "Hover Documentation")
+					-- Documentation - Use LSPSaga for better markdown rendering (fixes your escape character issue)
+					map("K", "<cmd>Lspsaga hover_doc<CR>", "Hover Documentation")
 
-					-- Highlight references
+					-- Additional LSPSaga mappings that enhance your workflow
+					map("gp", "<cmd>Lspsaga peek_definition<CR>", "Peek Definition")
+					map("gP", "<cmd>Lspsaga peek_type_definition<CR>", "Peek Type Definition")
+
+					-- Enhanced diagnostic navigation with LSPSaga
+					map("[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Previous Diagnostic")
+					map("]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", "Next Diagnostic")
+
+					-- Jump to errors only
+					map("[E", function()
+						require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+					end, "Previous Error")
+					map("]E", function()
+						require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+					end, "Next Error")
+
+					-- LSPSaga finder (alternative to telescope for some use cases)
+					map("gh", "<cmd>Lspsaga finder<CR>", "Find References/Implementations")
+
+					-- Outline
+					map("<leader>o", "<cmd>Lspsaga outline<CR>", "Toggle Outline")
+
+					-- Call hierarchy
+					map("<leader>ci", "<cmd>Lspsaga incoming_calls<CR>", "Incoming Calls")
+					map("<leader>co", "<cmd>Lspsaga outgoing_calls<CR>", "Outgoing Calls")
+
+					-- Enhanced diagnostic display (complements your existing diagnostic functions)
+					map("<leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>", "Show Line Diagnostics")
+					map("<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", "Show Cursor Diagnostics")
+					map("<leader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>", "Show Buffer Diagnostics")
+
+					-- Floating terminal (bonus feature)
+					keymap({ "n", "t" }, "<A-d>", "<cmd>Lspsaga term_toggle<CR>", { desc = "Toggle Terminal" })
+
+					-- Highlight references (keep your existing functionality)
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
 					if client and client.server_capabilities.documentHighlightProvider then
 						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
@@ -404,10 +601,18 @@ require("lazy").setup({
 				end,
 			})
 
-			-- Enhanced LSP capabilities
-			local capabilities = require("blink.cmp").get_lsp_capabilities()
+			-- Enhanced LSP capabilities - compatible with both nvim-cmp and blink.cmp
+			local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-			-- Server Configurations
+			-- If using blink.cmp (when uncommented), use blink capabilities
+			if pcall(require, "blink.cmp") then
+				capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
+				-- Fallback to nvim-cmp if available
+			elseif pcall(require, "cmp_nvim_lsp") then
+				capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+			end
+
+			-- Server Configurations (unchanged)
 			local servers = {
 				-- Python
 				pyright = {
@@ -470,7 +675,7 @@ require("lazy").setup({
 				},
 			}
 
-			-- Setup Mason
+			-- Setup Mason (unchanged)
 			require("mason").setup()
 
 			local ensure_installed = vim.tbl_keys(servers)
@@ -494,16 +699,16 @@ require("lazy").setup({
 				},
 			})
 
-			-- Enhanced Diagnostic Configuration
+			-- Enhanced Diagnostic Configuration (keep your existing setup but enhance with LSPSaga compatibility)
 			vim.diagnostic.config({
-				virtual_text = false,
+				virtual_text = false, -- LSPSaga handles this better
 				severity_sort = true,
 				underline = true,
 				update_in_insert = false,
 				signs = {
 					text = {
 						[vim.diagnostic.severity.ERROR] = "✗", -- Error: Cross mark
-						[vim.diagnostic.severity.WARN] = "⚠", -- Warning: Warning triangle
+						[vim.diagnostic.severity.WARN] = "⚠ ", -- Warning: Warning triangle
 						[vim.diagnostic.severity.INFO] = "ℹ", -- Info: Info circle
 						[vim.diagnostic.severity.HINT] = "➤", -- Hint: Arrow
 					},
@@ -518,7 +723,7 @@ require("lazy").setup({
 				},
 			})
 
-			-- Configure LSP handlers for better presentation
+			-- LSP handlers are now managed by LSPSaga, but we keep these as fallbacks
 			vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 				border = "rounded",
 				title = "Hover",
