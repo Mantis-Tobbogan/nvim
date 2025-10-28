@@ -3,7 +3,7 @@
 -- Neovim DAP configuration with Python (debugpy), Go, etc.
 -- Supports project-local .vscode/launch.json and virtualenv detection.
 
-return {
+--[[ return {
 	"mfussenegger/nvim-dap",
 	dependencies = {
 		"rcarriga/nvim-dap-ui",
@@ -97,4 +97,5 @@ return {
 		end, { desc = "DAP Conditional Breakpoint" })
 		vim.keymap.set("n", "<F3>", dapui.toggle, { desc = "DAP UI Toggle" })
 	end,
-}
+} ]]
+return {}
