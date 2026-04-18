@@ -1,0 +1,92 @@
+[
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "space s g": "pane::DeploySearch",
+      "space /": "pane::DeploySearch",
+      "space f r": [
+        "projects::OpenRecent",
+        {
+          "create_new_window": false
+        }
+      ],
+      "space e": "workspace::ToggleLeftDock",
+      "space E": "workspace::ToggleRightDock",
+      "space b b": "tab_switcher::Toggle",
+      "space b o": "pane::CloseOtherItems",
+      "space b d": [
+        "pane::CloseActiveItem",
+        {
+          "close_pinned": false
+        }
+      ],
+      "space w w": "workspace::ActivatePaneRight",
+      "space w q": "pane::CloseAllItems",
+      "space |": "pane::SplitRight",
+      "space -": "pane::SplitDown",
+      "space c r": "editor::Rename",
+      "space g g": "git_panel::ToggleFocus",
+      "] d": "editor::GoToDiagnostic",
+      "[ d": "editor::GoToPreviousDiagnostic",
+      "K": "editor::Hover",
+      "space c f": "editor::Format",
+      "space s s": "outline::Toggle",
+      "space s S": "project_symbols::Toggle",
+      "ctrl-p": "file_finder::Toggle",
+      "space c a": "editor::ToggleCodeActions",
+      "space x x": "workspace::ToggleBottomDock",
+      "space q q": "workspace::CloseWindow",
+      "space q a": "pane::CloseAllItems",
+      "ctrl-x": "editor::Cut",
+      "ctrl-shift-v": "editor::Paste"
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "<": "editor::Outdent",
+      ">": "editor::Indent",
+      "J": "editor::MoveLineDown",
+      "K": "editor::MoveLineUp",
+      "ctrl-shift-c": "editor::Copy",
+      "ctrl-shift-v": "editor::Paste"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "h": "project_panel::CollapseSelectedEntry",
+      "l": "project_panel::ExpandSelectedEntry",
+      "a": "project_panel::NewFile",
+      "shift-a": "project_panel::NewDirectory",
+      "d": [
+        "project_panel::Trash",
+        {
+          "skip_prompt": false
+        }
+      ],
+      "r": "project_panel::Rename",
+      "c": "project_panel::Copy",
+      "p": "project_panel::Paste",
+      "x": "project_panel::Cut",
+      "y": "project_panel::CopyPath"
+    }
+  },
+  {
+    "context": "Editor && !VimControl",
+    "bindings": {
+      "ctrl-x": "editor::Cut",
+      "ctrl-shift-/": "editor::ToggleComments",
+      "shift-alt-f": "editor::Format",
+      "ctrl-y": "editor::ConfirmCompletion",
+      "ctrl-shift-c": "editor::Copy",
+      "ctrl-shift-v": "editor::Paste"
+    }
+  },
+  {
+    "context": "menu",
+    "bindings": {
+      "ctrl-y": "menu::Confirm"
+    }
+  }
+]

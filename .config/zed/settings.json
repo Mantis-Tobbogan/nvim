@@ -1,0 +1,115 @@
+{
+  "edit_predictions": {
+    "mode": "subtle"
+  },
+  "icon_theme": "Zed (Default)",
+  "agent": {
+    "default_profile": "write",
+    "default_model": {
+      "effort": "medium",
+      "provider": "zed.dev",
+      "model": "gpt-5.3-codex",
+      "enable_thinking": true
+    },
+    "favorite_models": [
+      {
+        "provider": "Minimax",
+        "model": "MiniMax-M2.7",
+        "enable_thinking": false
+      },
+      {
+        "provider": "Minimax",
+        "model": "MiniMax-M2.5",
+        "enable_thinking": false
+      }
+    ],
+    "model_parameters": []
+  },
+  "language_models": {
+    "openai_compatible": {
+      "Minimax": {
+        "api_url": "https://api.minimax.io/v1",
+        "available_models": [
+          {
+            "name": "MiniMax-M2.7",
+            "max_tokens": 200000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": true,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": true,
+              "chat_completions": true,
+            },
+          },
+          {
+            "name": "MiniMax-M2.5",
+            "max_tokens": 200000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": true,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": true,
+              "chat_completions": true,
+            },
+          },
+        ],
+      },
+    },
+  },
+  "hover_popover_enabled": false,
+  "vim": {
+    "toggle_relative_line_numbers": true,
+    "use_system_clipboard": "on_yank",
+    "use_smartcase_find": true,
+    "gdefault": true,
+    "default_mode": "normal",
+  },
+  "toolbar": {
+    "code_actions": true,
+  },
+  "prettier": {
+    "allowed": true,
+  },
+  "which_key": {
+    "enabled": true,
+  },
+  "agent_servers": {},
+  "terminal": {
+    "font_size": 14.0,
+    "font_family": "CaskaydiaMono Nerd Font",
+  },
+  "base_keymap": "VSCode",
+  "show_signature_help_after_edits": true,
+  "auto_signature_help": false,
+  "relative_line_numbers": "enabled",
+  "sticky_scroll": {
+    "enabled": false,
+  },
+  "gutter": {
+    "min_line_number_digits": 2,
+    "line_numbers": true,
+  },
+  "minimap": {
+    "show": "never",
+  },
+  "cursor_shape": "bar",
+  "cursor_blink": true,
+  "buffer_font_weight": 500.0,
+  "buffer_font_family": "CaskaydiaMono Nerd Font",
+  "file_types": {
+    "plaintext": ["*.conf"],
+  },
+  "show_whitespaces": "selection",
+  "vim_mode": true,
+  "ui_font_size": 16,
+  "buffer_font_size": 14.5,
+  "theme": {
+    "mode": "dark",
+    "light": "Ayu Light",
+    "dark": "Catppuccin Macchiato",
+  },
+}
