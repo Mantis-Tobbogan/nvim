@@ -14,9 +14,6 @@ export PATH
 export EDITOR=nvim
 export VISUAL=nvim
 
-# LS Colors
-eval "$(dircolors -b ~/.dircolors)"
-
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 
@@ -33,15 +30,25 @@ unset rc
 # opencode
 export PATH=/home/dhanunjay/.opencode/bin:$PATH
 
-# Git alias
-alias g=git
+# Git function
+g() {
+  if [ "$1" = "st" ]; then
+    git status
+  else
+    git "$@"
+  fi
+}
 
 # Source alias
 alias so=source
 
 alias pyclean='find . -type f -name "*.pyc" -delete -o -type d -name "__pycache__" -exec rm -rf {} +'
-# LS alias with colors
-alias ls='ls --color=auto'
+
+# Eza (modern ls)
+alias ls='eza --icons'
+alias ll='eza --icons -l --git'
+alias lt='eza --icons --tree --level=2'
+alias la='eza --icons -la --git'
 
 # Mise
 eval "$(/home/dhanunjay/.local/bin/mise activate bash)"
@@ -52,5 +59,9 @@ eval "$(starship init bash)"
 # Zoxide
 eval "$(zoxide init bash)"
 
+# Fzf
+source /usr/share/fzf/shell/key-bindings.bash
+
 # Dotfiles bare repo alias
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+export PATH="$HOME/.local/share/yabridge:$PATH"

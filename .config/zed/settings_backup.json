@@ -1,0 +1,72 @@
+{
+  "agent": {
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-haiku-4-5",
+      "enable_thinking": false
+    },
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "hover_popover_enabled": false,
+  "vim": {
+    "toggle_relative_line_numbers": true,
+    "use_system_clipboard": "on_yank",
+    "use_smartcase_find": true,
+    "gdefault": true,
+    "default_mode": "normal"
+  },
+  "toolbar": {
+    "code_actions": true
+  },
+  "prettier": {
+    "allowed": true
+  },
+  "which_key": {
+    "enabled": true
+  },
+  "agent_servers": {
+    "OpenCode": {
+      "command": "opencode",
+      "args": ["acp"]
+    }
+  },
+  "terminal": {
+    "font_size": 14.0,
+    "font_family": "CaskaydiaCove Nerd Font Mono"
+  },
+  "base_keymap": "VSCode",
+  "show_signature_help_after_edits": true,
+  "auto_signature_help": false,
+  "relative_line_numbers": "enabled",
+  "sticky_scroll": {
+    "enabled": false
+  },
+  "gutter": {
+    "min_line_number_digits": 2,
+    "line_numbers": true
+  },
+  "minimap": {
+    "show": "never"
+  },
+  "cursor_shape": "bar",
+  "cursor_blink": true,
+  "buffer_font_weight": 500.0,
+  "buffer_font_family": "CaskaydiaMono Nerd Font",
+  "file_types": {
+    "plaintext": ["*.conf"]
+  },
+  "show_whitespaces": "selection",
+  "vim_mode": true,
+  "ui_font_size": 16,
+  "buffer_font_size": 14.5,
+  "theme": {
+    "mode": "system",
+    "light": "Ayu Light",
+    "dark": "Ayu Mirage"
+  },
+  "font_features": {
+    "ligatures": true
+  },
+  "cursor_vim_mode_background": true
+}
