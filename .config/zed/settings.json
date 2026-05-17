@@ -1,29 +1,42 @@
 {
+  "project_panel": {
+    "dock": "left",
+  },
+  "outline_panel": {
+    "dock": "left",
+  },
+  "collaboration_panel": {
+    "dock": "left",
+  },
+  "git_panel": {
+    "dock": "left",
+  },
   "edit_predictions": {
-    "mode": "subtle"
+    "mode": "subtle",
   },
   "icon_theme": "Zed (Default)",
   "agent": {
+    "dock": "right",
     "default_profile": "write",
     "default_model": {
       "effort": "medium",
       "provider": "zed.dev",
       "model": "gpt-5.3-codex",
-      "enable_thinking": true
+      "enable_thinking": true,
     },
     "favorite_models": [
       {
         "provider": "Minimax",
         "model": "MiniMax-M2.7",
-        "enable_thinking": false
+        "enable_thinking": false,
       },
       {
         "provider": "Minimax",
         "model": "MiniMax-M2.5",
-        "enable_thinking": false
-      }
+        "enable_thinking": false,
+      },
     ],
-    "model_parameters": []
+    "model_parameters": [],
   },
   "language_models": {
     "openai_compatible": {
@@ -79,8 +92,9 @@
   },
   "agent_servers": {},
   "terminal": {
-    "font_size": 14.0,
-    "font_family": "CaskaydiaMono Nerd Font",
+    "font_weight": 500.0,
+    "font_size": 15.0,
+    "font_family": "CaskaydiaCove Nerd Font",
   },
   "base_keymap": "VSCode",
   "show_signature_help_after_edits": true,
@@ -110,6 +124,6 @@
   "theme": {
     "mode": "dark",
     "light": "Ayu Light",
-    "dark": "One Dark",
+    "dark": "Ayu Mirage",
   },
 }

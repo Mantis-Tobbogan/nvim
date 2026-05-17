@@ -5,7 +5,7 @@
 --
 -- CONFIGURATION:
 local config = {
-  default_theme = "kanagawa-wave", -- Change this to switch default theme
+  default_theme = "rose-pine-main", -- Change this to switch default theme
   transparent = true, -- Set to false to disable transparency
 }
 --
