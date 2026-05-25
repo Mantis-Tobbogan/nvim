@@ -41,6 +41,7 @@ g() {
 
 # Source alias
 alias so=source
+alias ssh='kitten ssh'
 
 alias pyclean='find . -type f -name "*.pyc" -delete -o -type d -name "__pycache__" -exec rm -rf {} +'
 
