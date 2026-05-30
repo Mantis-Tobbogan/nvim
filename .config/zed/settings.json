@@ -113,7 +113,7 @@
   "cursor_shape": "bar",
   "cursor_blink": true,
   "buffer_font_weight": 500.0,
-  "buffer_font_family": "CaskaydiaMono Nerd Font",
+  "buffer_font_family": "CaskaydiaCove Nerd Font Mono",
   "file_types": {
     "plaintext": ["*.conf"],
   },
@@ -124,6 +124,6 @@
   "theme": {
     "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Ayu Mirage",
+    "dark": "Ayu Dark",
   },
 }

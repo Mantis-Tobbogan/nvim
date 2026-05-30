@@ -1,7 +1,9 @@
 binds {
-    Super+Return { spawn "kitty"; }
-    Super+Shift+B { spawn "flatpak" "run" "com.vivaldi.Vivaldi"; }
-    Super+Shift+M { spawn "flatpak" "run" "com.spotify.Client"; }
-    Super+Shift+T { spawn "flatpak" "run" "io.typora.Typora"; }
-    Super+Shift+O { spawn "flatpak" "run" "md.obsidian.Obsidian"; }
+    Super+F12 { fullscreen-window; }
+    Super+Return hotkey-overlay-title="Kitty" { spawn "kitty"; }
+    Super+Shift+B hotkey-overlay-title="Vivaldi" { spawn "flatpak" "run" "com.vivaldi.Vivaldi"; }
+    Super+Shift+F hotkey-overlay-title="Files" { spawn "nautilus"; }
+    Super+Shift+M hotkey-overlay-title="Spotify" { spawn "flatpak" "run" "com.spotify.Client"; }
+    Super+Shift+O hotkey-overlay-title="Obsidian" { spawn "flatpak" "run" "md.obsidian.Obsidian"; }
+    Super+Shift+T hotkey-overlay-title="Typora" { spawn "flatpak" "run" "io.typora.Typora"; }
 }
