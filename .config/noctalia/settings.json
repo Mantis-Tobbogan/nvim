@@ -26,7 +26,7 @@
         "showIconBackground": false,
         "sortByMostUsed": true,
         "terminalCommand": "alacritty -e",
-        "viewMode": "list"
+        "viewMode": "grid"
     },
     "audio": {
         "mprisBlacklist": [
@@ -37,8 +37,8 @@
         "visualizerType": "linear",
         "volumeFeedback": false,
         "volumeFeedbackSoundFile": "",
-        "volumeOverdrive": false,
-        "volumeStep": 5
+        "volumeOverdrive": true,
+        "volumeStep": 2
     },
     "bar": {
         "autoHideDelay": 500,
@@ -66,7 +66,7 @@
         "mouseWheelWrap": true,
         "outerCorners": false,
         "position": "top",
-        "reverseScroll": false,
+        "reverseScroll": true,
         "rightClickAction": "launcherPanel",
         "rightClickCommand": "",
         "rightClickFollowMouse": true,
@@ -114,13 +114,15 @@
                 {
                     "colorizeIcons": false,
                     "hideMode": "hidden",
-                    "id": "ActiveWindow",
-                    "maxWidth": 145,
-                    "scrollingMode": "hover",
-                    "showIcon": true,
-                    "showText": false,
-                    "textColor": "none",
-                    "useFixedWidth": false
+                    "iconScale": 0.9,
+                    "id": "Taskbar",
+                    "maxTaskbarWidth": 60,
+                    "onlyActiveWorkspaces": true,
+                    "onlySameOutput": true,
+                    "showPinnedApps": false,
+                    "showTitle": false,
+                    "smartWidth": true,
+                    "titleWidth": 145
                 },
                 {
                     "compactMode": false,
@@ -220,8 +222,8 @@
     "brightness": {
         "backlightDeviceMappings": [
         ],
-        "brightnessStep": 5,
-        "enableDdcSupport": false,
+        "brightnessStep": 1,
+        "enableDdcSupport": true,
         "enforceMinimum": true
     },
     "calendar": {
@@ -242,11 +244,11 @@
     },
     "colorSchemes": {
         "darkMode": true,
-        "generationMethod": "muted",
+        "generationMethod": "content",
         "manualSunrise": "06:30",
         "manualSunset": "18:30",
         "monitorForColors": "",
-        "predefinedScheme": "Nord",
+        "predefinedScheme": "Catppuccin",
         "schedulingMode": "off",
         "syncGsettings": true,
         "useWallpaperColors": true
@@ -266,7 +268,7 @@
                 "id": "audio-card"
             },
             {
-                "enabled": false,
+                "enabled": true,
                 "id": "brightness-card"
             },
             {
@@ -316,6 +318,16 @@
         "gridSnap": false,
         "gridSnapScale": true,
         "monitorWidgets": [
+            {
+                "name": "HDMI-A-1",
+                "widgets": [
+                ]
+            },
+            {
+                "name": "eDP-1",
+                "widgets": [
+                ]
+            }
         ],
         "overviewEnabled": true
     },
@@ -325,7 +337,7 @@
         "colorizeIcons": false,
         "deadOpacity": 0.6,
         "displayMode": "auto_hide",
-        "dockType": "floating",
+        "dockType": "attached",
         "enabled": false,
         "floatingRatio": 1,
         "groupApps": false,
@@ -347,7 +359,7 @@
         ],
         "pinnedStatic": false,
         "position": "bottom",
-        "showDockIndicator": false,
+        "showDockIndicator": true,
         "showLauncherIcon": false,
         "sitOnFrame": false,
         "size": 1
@@ -358,7 +370,7 @@
         "animationDisabled": false,
         "animationSpeed": 1,
         "autoStartAuth": false,
-        "avatarImage": "/home/dhanunjay/.face",
+        "avatarImage": "/home/dhanunjay/Pictures/Wallpapers/Deal with it_ _ Reaction Images.jpeg",
         "boxRadiusRatio": 1,
         "clockFormat": "hh\\nmm",
         "clockStyle": "custom",
@@ -402,7 +414,7 @@
         "lockScreenMonitors": [
         ],
         "lockScreenTint": 0,
-        "passwordChars": false,
+        "passwordChars": true,
         "radiusRatio": 1,
         "reverseScroll": false,
         "scaleRatio": 1,
@@ -506,7 +518,7 @@
         },
         "sounds": {
             "criticalSoundFile": "",
-            "enabled": false,
+            "enabled": true,
             "excludedApps": "discord,firefox,chrome,chromium,edge",
             "lowSoundFile": "",
             "normalSoundFile": "",
@@ -631,10 +643,6 @@
             },
             {
                 "enabled": true,
-                "id": "kitty"
-            },
-            {
-                "enabled": true,
                 "id": "gtk"
             },
             {
@@ -644,10 +652,6 @@
             {
                 "enabled": true,
                 "id": "sway"
-            },
-            {
-                "enabled": true,
-                "id": "walker"
             },
             {
                 "enabled": true,
@@ -692,6 +696,10 @@
             {
                 "enabled": true,
                 "id": "ghostty"
+            },
+            {
+                "enabled": true,
+                "id": "niri"
             }
         ],
         "enableUserTheming": false
@@ -704,7 +712,7 @@
         "fontFixedScale": 1,
         "panelBackgroundOpacity": 0.93,
         "panelsAttachedToBar": true,
-        "scrollbarAlwaysVisible": true,
+        "scrollbarAlwaysVisible": false,
         "settingsPanelMode": "attached",
         "settingsPanelSideBarCardStyle": false,
         "tooltipsEnabled": true,

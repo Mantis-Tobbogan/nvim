@@ -1,4 +1,5 @@
 {
+  "diff_view_style": "split",
   "project_panel": {
     "dock": "left",
   },
@@ -16,13 +17,19 @@
   },
   "icon_theme": "Zed (Default)",
   "agent": {
+    "tool_permissions": {
+      "tools": {
+        "terminal": {
+          "default": "allow"
+        }
+      }
+    },
     "dock": "right",
     "default_profile": "write",
     "default_model": {
-      "effort": "medium",
-      "provider": "zed.dev",
-      "model": "gpt-5.3-codex",
-      "enable_thinking": true,
+      "provider": "opencode",
+      "model": "free/big-pickle",
+      "enable_thinking": false,
     },
     "favorite_models": [
       {
@@ -124,6 +131,6 @@
   "theme": {
     "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Ayu Dark",
+    "dark": "Kanagawa Dragon",
   },
 }

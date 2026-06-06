@@ -66,3 +66,4 @@ source /usr/share/fzf/shell/key-bindings.bash
 # Dotfiles bare repo alias
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 export PATH="$HOME/.local/share/yabridge:$PATH"
+export PATH="$HOME/.local/pnpm/bin:$PATH"
