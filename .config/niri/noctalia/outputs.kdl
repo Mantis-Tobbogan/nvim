@@ -1,6 +1,9 @@
+// Hand-written monitor configuration (migrated from DMS auto-generated).
+// Edit this file to change monitor layout.
+
 output "eDP-1" {
     mode "1920x1080@60.003"
-    scale 1.33
+    scale 1.25
     position x=0 y=0
 }
 
@@ -9,3 +12,4 @@ output "HDMI-A-1" {
     scale 1.25
     position x=1536 y=0
 }
+

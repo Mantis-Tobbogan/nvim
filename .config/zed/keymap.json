@@ -7,8 +7,8 @@
       "space f r": [
         "projects::OpenRecent",
         {
-          "create_new_window": false
-        }
+          "create_new_window": false,
+        },
       ],
       "space e": "workspace::ToggleLeftDock",
       "space E": "workspace::ToggleRightDock",
@@ -17,8 +17,8 @@
       "space b d": [
         "pane::CloseActiveItem",
         {
-          "close_pinned": false
-        }
+          "close_pinned": false,
+        },
       ],
       "space w w": "workspace::ActivatePaneRight",
       "space w q": "pane::CloseAllItems",
@@ -33,13 +33,15 @@
       "space s s": "outline::Toggle",
       "space s S": "project_symbols::Toggle",
       "ctrl-p": "file_finder::Toggle",
+      "space space": "file_finder::Toggle",
       "space c a": "editor::ToggleCodeActions",
       "space x x": "workspace::ToggleBottomDock",
       "space q q": "workspace::CloseWindow",
       "space q a": "pane::CloseAllItems",
       "ctrl-x": "editor::Cut",
-      "ctrl-shift-v": "editor::Paste"
-    }
+      "ctrl-shift-v": "editor::Paste",
+      "space c d": "editor::ToggleDiagnostics",
+    },
   },
   {
     "context": "vim_mode == visual",
@@ -49,8 +51,8 @@
       "J": "editor::MoveLineDown",
       "K": "editor::MoveLineUp",
       "ctrl-shift-c": "editor::Copy",
-      "ctrl-shift-v": "editor::Paste"
-    }
+      "ctrl-shift-v": "editor::Paste",
+    },
   },
   {
     "context": "ProjectPanel && not_editing",
@@ -62,15 +64,15 @@
       "d": [
         "project_panel::Trash",
         {
-          "skip_prompt": false
-        }
+          "skip_prompt": false,
+        },
       ],
       "r": "project_panel::Rename",
       "c": "project_panel::Copy",
       "p": "project_panel::Paste",
       "x": "project_panel::Cut",
-      "y": "project_panel::CopyPath"
-    }
+      "y": "workspace::CopyPath",
+    },
   },
   {
     "context": "Editor && !VimControl",
@@ -80,13 +82,13 @@
       "shift-alt-f": "editor::Format",
       "ctrl-y": "editor::ConfirmCompletion",
       "ctrl-shift-c": "editor::Copy",
-      "ctrl-shift-v": "editor::Paste"
-    }
+      "ctrl-shift-v": "editor::Paste",
+    },
   },
   {
     "context": "menu",
     "bindings": {
-      "ctrl-y": "menu::Confirm"
-    }
-  }
+      "ctrl-y": "menu::Confirm",
+    },
+  },
 ]
