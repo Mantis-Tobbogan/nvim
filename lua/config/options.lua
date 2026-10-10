@@ -9,9 +9,13 @@ if vim.fn.isdirectory(mise_shims) == 1 and not vim.env.PATH:find(mise_shims, 1, 
   vim.env.PATH = mise_shims .. ":" .. vim.env.PATH
 end
 
--- NOTE: do NOT set `vim.opt.clipboard` here. LazyVim already configures it
--- correctly: `unnamedplus`, or empty over SSH so the built-in OSC52 provider
--- takes over. Overriding it breaks "yank over SSH".
+-- Keep Neovim registers SEPARATE from the system clipboard.
+-- LazyVim's default is `unnamedplus` (all yanks/deletes go to the system
+-- clipboard); we explicitly override that back to the Vim default (empty).
+-- `y`/`d`/`p` now only touch Neovim's own registers.
+-- Use the explicit `+` register to cross the boundary:
+--   `"+y` yank to system clipboard, `"+p` paste from it, or <C-S-v> to paste.
+vim.opt.clipboard = ""
 
 vim.opt.guifont = "CaskaydiaCove Nerd Font:h12"
 vim.opt.linespace = 3
