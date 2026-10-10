@@ -1,4 +1,8 @@
--- Configure LSP diagnostics with letter signs and no inline display
+-- Readability-focused diagnostics.
+--
+--   * curly underlines (like VSCode/Zed) so problems are visible while reading
+--   * clean Nerd Font signs
+--   * no inline virtual text, to keep code uncluttered
 return {
   -- Disable snacks notifier and dashboard
   {
@@ -8,29 +12,31 @@ return {
       dashboard = { enabled = false },
     },
   },
-  -- Configure diagnostics in nvim-lspconfig
+
   {
     "neovim/nvim-lspconfig",
     opts = {
       diagnostics = {
-        -- No inline text in the editor
+        -- No inline text for every diagnostic, but show the message for the
+        -- current line only (IDE-style, unobtrusive).
         virtual_text = false,
-        -- No underlining of problematic code
-        underline = false,
-        -- Show signs in the gutter
+        virtual_lines = { current_line = true },
+        -- Underline problems (curly) instead of hiding them entirely
+        underline = { severity = { min = vim.diagnostic.severity.HINT } },
+        -- Clean Nerd Font icons in the gutter
         signs = {
           text = {
-            [vim.diagnostic.severity.ERROR] = "E",
-            [vim.diagnostic.severity.WARN] = "W",
-            [vim.diagnostic.severity.INFO] = "I",
-            [vim.diagnostic.severity.HINT] = "H",
+            [vim.diagnostic.severity.ERROR] = " ",
+            [vim.diagnostic.severity.WARN] = " ",
+            [vim.diagnostic.severity.INFO] = " ",
+            [vim.diagnostic.severity.HINT] = " ",
           },
         },
         -- Don't update diagnostics while typing
         update_in_insert = false,
         -- Sort by severity
         severity_sort = true,
-        -- Float window options (when you manually trigger diagnostics)
+        -- Float window when you manually trigger diagnostics
         float = {
           enabled = true,
           focusable = true,
