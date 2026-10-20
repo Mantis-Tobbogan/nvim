@@ -60,17 +60,48 @@ git diff lazy-lock.json && git commit -am "chore: update plugins"
 Always commit `lazy-lock.json` after updating so the other machines can `git pull`
 and reproduce exactly the same versions.
 
+## The same setup in VSCode and Zed
+
+This config is the **source of truth** for a shared editing setup. The same
+keymap spec is implemented in VSCode (VSCodeVim) and Zed (native vim), so a
+key means the same thing in all three editors.
+
+| Piece | Where |
+| --- | --- |
+| Canonical keymap spec (93 mappings) | [`keymaps.json`](./keymaps.json) |
+| Parity matrix | [`docs/EDITOR-PARITY.md`](./docs/EDITOR-PARITY.md) |
+| Cheatsheet | [`KEYMAPS.md`](./KEYMAPS.md) |
+| Port templates | [`ports/`](./ports) |
+| Regenerate the ports | `python3 scripts/render-ports.py` |
+| Verify all three editors | `python3 scripts/check-parity.py` |
+
+```sh
+# after editing keymaps.json:
+python3 scripts/render-ports.py     # rewrite ~/.config/Code/User/* and ~/.config/zed/*
+python3 scripts/check-parity.py     # prove nvim, VSCode and Zed all implement it
+```
+
+`check-parity.py` boots headless Neovim (forcing the `VeryLazy` event that
+LazyVim gates its default keymaps on), reads the rendered VSCode and Zed
+configs, and also greps the installed VSCode/Zed binaries to prove every
+command id and action name really exists.
+
+Shared look and feel: Catppuccin Mocha, CaskaydiaCove Nerd Font at 14.5px,
+relative line numbers, bar cursor, format on save, and one indent policy
+(Python 4 spaces, Go tabs of width 4, everything else 2).
+
 ## Layout
 
 ```
 init.lua                     # bootstraps lua/config/lazy.lua
 lazyvim.json                 # enabled LazyVim extras (the "switchboard")
 lazy-lock.json               # pinned plugin versions (commit this!)
+keymaps.json                 # canonical keymap spec (shared with VSCode + Zed)
 lua/config/
   lazy.lua                   # lazy.nvim bootstrap
   options.lua                # editor options + mise PATH
   theme.lua                  # theme, transparency, :Theme command
-  keymaps.lua                # personal keymaps
+  keymaps.lua                # personal keymaps (parity anchors)
   autocmds.lua               # personal autocommands
   dap/                       # debugger launch configs (python)
 lua/plugins/
@@ -79,21 +110,30 @@ lua/plugins/
   nvim-dap.lua               # debugger wiring (dap.core + F-keys + python)
   dropbar.lua                # winbar (breadcrumbs)
   ...                        # other plugin tweaks
+ports/                       # templates for the VSCode and Zed configs
+scripts/
+  render-ports.py            # regenerate the VSCode/Zed configs
+  check-parity.py            # verify all three editors match the spec
+  port-keymaps.py            # print the generated key tables
+  render-parity-doc.py       # regenerate docs/EDITOR-PARITY.md
+docs/EDITOR-PARITY.md        # the full matrix
 ```
 
 ## Custom mappings worth knowing
 
 See [`KEYMAPS.md`](./KEYMAPS.md) for the full, up-to-date cheatsheet (navigation,
-git, debug, tests, refactoring, multi-cursor, and the meta-skills).
+git, debug, tests, refactoring, multi-cursor, and the meta-skills) — it is the
+same table in Neovim, VSCode and Zed.
 
 | Mapping | Action |
 | --- | --- |
-| `<C-c>` | yank (line in normal mode, selection in visual) |
+| `<C-c>` | yank to the system clipboard (line in normal mode, selection in visual) |
 | `<C-S-v>` | paste from system clipboard |
 | `<leader>;` | pick symbol from dropbar winbar |
 | `[;` / `];` | go to start of context / next context |
 | `<leader>dt` / `<leader>dc` | debug: toggle breakpoint / continue |
 | `<leader>du` | debug: toggle DAP UI |
+| `<leader>E` | toggle the explorer panel (overrides LazyVim's "explorer in cwd") |
 | `:Theme [name]` | list/switch theme at runtime |
 
 ## Changing things

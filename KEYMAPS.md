@@ -1,94 +1,132 @@
 # Keymaps & commands
 
-Everything here works out of the box in this config. `which-key` shows these
-too: press `<leader>` and wait, or `<leader>?`.
+**The same keys mean the same thing in Neovim, VSCode and Zed.** The leader is
+`<space>` everywhere. The table below is the curated core; the full matrix
+(including the per-editor implementation of every key) is in
+[`docs/EDITOR-PARITY.md`](./docs/EDITOR-PARITY.md).
 
-## The meta-skills (learn these first)
+Everything listed here works out of the box in all three editors. `which-key`
+in Neovim and Zed also shows these: press `<leader>` and wait, or `<leader>?`.
 
-| Command | What it does |
-| --- | --- |
-| `:LazyExtras` | Browse/enable features the LazyVim way — **the answer to "how do I add X?"** |
-| `:Lazy` | Plugin manager: update, sync, profile, inspect |
-| `:Mason` | LSP servers / DAP adapters / tools, and their install logs |
-| `:ConformInfo` | Which formatters apply to the current buffer and where they come from |
-| `:LspInfo` | Which language servers are attached to this buffer |
-| `:checkhealth` | Diagnose anything that feels broken |
-| `:Tutor` | Vim fundamentals, guided |
-
-## Files, buffers, search
+## Files & search
 
 | Key | Action |
 | --- | --- |
-| `<leader><space>` | Find files (root) |
-| `<leader>/` | Live grep (root) |
-| `<leader>,` | Buffers |
-| `<leader>e` | File explorer (neo-tree) |
-| `<leader>fm` | mini.files — edit the filesystem **as a buffer** (dir of current file) |
-| `<leader>fM` | mini.files (cwd) |
-| `<C-h/j/k/l>` | Move between windows |
-| `s` / `S` | Leap forward / backward to any location (2 keystrokes) |
-| `gs` | Leap across windows |
+| `<leader><space>` | Find files (project root) |
+| `<leader>/` | Live grep (project root) |
+| `<leader>fg` | Find files tracked by git |
+| `<leader>fr` | Recently opened files |
+| `<leader>fb` | Buffer picker |
+| `<leader>fB` | All buffers (including unlisted) |
+| `<leader>fm` | Browse files (directory of current file) |
+| `<leader>fM` | Browse files (working directory) |
+| `<leader>e` | File explorer (project root) |
+| `<leader>E` | Toggle explorer / sidebar panel |
+| `<leader>ft` | Toggle integrated terminal (project root) |
+| `<leader>fT` | Toggle integrated terminal (working directory) |
 
-## Navigation between things
+## Buffers & tabs
 
 | Key | Action |
 | --- | --- |
-| `gd` / `gr` / `gI` | Definition / references / implementation |
-| `K` | Hover docs (rounded popup) |
-| `<leader>ca` | Code action |
-| `<leader>rn` | Rename symbol (live preview via inc-rename) |
+| `<leader>,` | Switch buffer |
+| `<leader>be` | Buffer explorer |
+| `<leader>bp` | Pin buffer / tab |
+| `<leader>bd` | Delete buffer |
+| `<leader>bl` / `<leader>br` | Close buffers to the left / right |
+| `]b` / `[b` | Next / previous buffer |
+
+## Windows & panes
+
+| Key | Action |
+| --- | --- |
+| `<leader>\|` | Split to the right (vertical split) |
+| `<leader>-` | Split below (horizontal split) |
+| `<leader>wd` | Close window / editor group |
+| `<leader>wm` | Toggle zoom (maximize pane) |
+| `<C-h/j/k/l>` | Focus pane left / below / above / right |
+
+## LSP navigation
+
+| Key | Action |
+| --- | --- |
+| `gd` | Go to definition |
+| `gr` | Find references |
+| `gI` | Go to implementation |
+| `gy` | Go to type definition |
+| `K` | Hover documentation |
+| `gK` | Signature help |
+| `<leader>ca` | Code action (quick fix) |
+| `<leader>cr` | Rename symbol |
+| `[[` / `]]` | Previous / next reference |
+
+## Diagnostics & todos
+
+| Key | Action |
+| --- | --- |
 | `]d` / `[d` | Next / previous diagnostic |
-| `]c` / `[c` | Next / previous git hunk |
+| `<leader>xx` | Workspace diagnostics (Trouble / Problems) |
+| `<leader>xX` | Buffer diagnostics |
+| `<leader>sd` | Diagnostics picker |
 | `]t` / `[t` | Next / previous TODO comment |
-| `<leader>cs` | Aerial symbol browser |
-| `<leader>xx` | Trouble: workspace diagnostics |
-| `<leader>xX` | Trouble: buffer diagnostics |
-| `<leader>cS` | Trouble: LSP references/definitions |
-| `<leader>xt` | Trouble: todos |
-
-## Editing
-
-| Key | Action |
-| --- | --- |
-| `<leader>p` | Yank history (paste from the ring) |
-| `[y` / `]y` | Cycle through yank history while pasting |
-| `p` / `P` / `gp` / `gP` | Paste (yanky-backed, history-aware) |
-| `<C-a>` / `<C-x>` | Increment / decrement numbers, dates, booleans (dial) |
-| `gsa` / `gsd` / `gsr` | Add / delete / replace surrounding (mini.surround) |
-| `gcc` / `gc` | Comment line / selection |
-| `<leader>rf` | Extract function (refactor) |
-| `<leader>rv` | Extract variable (refactor) |
-| `<leader>ri` | Inline variable (refactor) |
-| `<leader>rp` | Debug print (refactor) |
-| `<C-n>` | Multi-cursor: select next occurrence (visual-multi) |
-| `<C-Down>` / `<C-Up>` | Multi-cursor: add cursor below / above |
-| `w` / `e` / `b` | Spider motions (stop at camelCase/snake_case) |
-| `gq` / `<leader>cf` | Format (LSP / conform) |
 
 ## Git
 
 | Key | Action |
 | --- | --- |
-| `<leader>gg` / `<leader>gG` | Lazygit (root / cwd) |
-| *(automatic)* | Inline blame on the current line (gitsigns) |
+| `<leader>gg` / `<leader>gG` | Lazygit (project root / working directory) |
+| `<leader>gs` | Git status |
+| `<leader>gc` | Git commits |
 | `<leader>ghs` | Stage hunk |
 | `<leader>ghr` | Reset hunk |
 | `<leader>ghp` | Preview hunk inline |
-| `<leader>ghb` / `<leader>ghB` | Blame line / buffer |
-| `]c` / `[c` | Next / previous hunk |
+| `<leader>ghb` / `<leader>ghB` | Blame current line / whole buffer |
+| `]h` / `[h` | Next / previous git hunk |
 
-## Debug (DAP)
+> VSCode has no "next/previous hunk" command, so `]h` / `[h` are Neovim + Zed only.
+
+## Editing
+
+| Key | Action |
+| --- | --- |
+| `gcc` | Toggle comment on line |
+| `<leader>cf` | Format buffer |
+| `gsa` / `gsd` / `gsr` | Add / delete / replace surrounding pair |
+| `<C-a>` / `<C-x>` | Increment / decrement number under cursor |
+| `<C-n>` | Add cursor below (multi-cursor) |
+| `<C-S-n>` | Add cursor above (multi-cursor) |
+| `s` / `S` | Jump to visible text / to a treesitter symbol (flash) |
+| `<leader>p` | Paste from yank history |
+| `<C-c>` | Copy to the system clipboard |
+| `<C-S-v>` | Paste from the system clipboard |
+
+> Surround, increment/decrement, flash-jump and the yank history are Neovim only.
+
+## Symbols, focus & workspace
+
+| Key | Action |
+| --- | --- |
+| `<leader>cs` | Symbol outline (current file) |
+| `<leader>sS` | Workspace symbols |
+| `<leader>sk` | Show keymaps |
+| `<leader>sr` | Search and replace |
+| `<leader>sj` | Jump back (jumplist) |
+| `<leader>sp` | Command palette (VSCode + Zed) |
+| `<leader>uz` | Zen mode (distraction free) |
+| `<leader>uu` | Undo tree (Neovim only) |
+| `<leader>cp` | Markdown preview in browser |
+| `<leader>qq` | Quit window |
+| `<leader>qa` | Quit all editors (VSCode + Zed) |
+
+## Debug
 
 | Key | Action |
 | --- | --- |
 | `<leader>db` | Toggle breakpoint |
-| `<leader>dc` | Run / continue · `<F5>` alias |
+| `<leader>dc` | Run / continue |
 | `<leader>di` / `<leader>do` / `<leader>dO` | Step into / out / over |
-| `<leader>dt` | Terminate |
-| `<leader>du` | Toggle DAP UI |
-| `<leader>dr` | Toggle REPL |
-| `<leader>de` | Evaluate expression under cursor |
-| `<F9>` / `<F10>` / `<F11>` | Breakpoint / step over / step into |
+| `<leader>dt` | Terminate session |
+| `<F5>` / `<F9>` / `<F10>` / `<F11>` | Run / breakpoint / step over / step into |
 
 ## Tests
 
@@ -100,17 +138,39 @@ too: press `<leader>` and wait, or `<leader>?`.
 | `<leader>to` | Show output |
 | `<leader>tw` | Watch test file |
 
-## Focus / writing
+> VSCode maps `<leader>tt` / `<leader>tr` to the Testing panel; Zed has no test runner UI.
+
+## Neovim-only extras
+
+These live in the Neovim config and have no counterpart in the other two
+editors, but they are worth knowing:
 
 | Key | Action |
 | --- | --- |
-| `<leader>uz` | Zen Mode (distraction-free) |
+| `<C-c>` | Yank to the system clipboard (Neovim keeps separate registers) |
+| `<C-S-v>` | Paste from the system clipboard |
+| `<leader>;` | Pick a symbol from the winbar (dropbar) |
+| `[;` / `];` | Go to the start of the context / next context |
+| `<leader>du` | Toggle the DAP UI |
+| `<leader>de` | Evaluate the expression under the cursor |
+| `<leader>um` | Toggle in-buffer Markdown rendering |
 | `<leader>uu` | Undo tree |
-| `<leader>cp` | Markdown preview in browser |
-| `<leader>um` | Toggle in-buffer Markdown rendering (off by default) |
-| `]p` / `[p` | Paste indented (linewise) |
+| `<leader>uz` | Zen mode |
+| `:Theme [name]` | List / switch the colorscheme at runtime |
 
-## Vim fundamentals worth internalizing
+## The meta-skills (worth internalising)
+
+| Command | What it does |
+| --- | --- |
+| `:LazyExtras` | Browse/enable features the LazyVim way — **the answer to "how do I add X?"** |
+| `:Lazy` | Plugin manager: update, sync, profile, inspect |
+| `:Mason` | LSP servers / DAP adapters / tools, and their install logs |
+| `:ConformInfo` | Which formatters apply to the current buffer and where they come from |
+| `:LspInfo` | Which language servers are attached to this buffer |
+| `:checkhealth` | Diagnose anything that feels broken |
+| `:Tutor` | Vim fundamentals, guided |
+
+## Vim fundamentals worth internalising
 
 - **Text objects:** `ci(`, `da{`, `yi"`, `vaf` (function), `via` (argument).
 - **Registers:** `"0` last yank, `"+` system clipboard, `"_` black hole.
