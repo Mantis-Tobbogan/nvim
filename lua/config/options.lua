@@ -17,7 +17,10 @@ end
 --   `"+y` yank to system clipboard, `"+p` paste from it, or <C-S-v> to paste.
 vim.opt.clipboard = ""
 
-vim.opt.guifont = "CaskaydiaCove Nerd Font:h12"
+-- Font size h11 (~14.7px) matches the 14.5px buffer font used by VSCode
+-- ("editor.fontSize") and Zed ("buffer_font_size") so the three editors show
+-- code at the same scale.
+vim.opt.guifont = "CaskaydiaCove Nerd Font:h11"
 vim.opt.linespace = 3
 vim.opt.relativenumber = true -- Force relative numbers everywhere
 vim.opt.termguicolors = true
