@@ -1,0 +1,376 @@
+{
+  "diff_view_style": "split",
+  "project_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "git_panel": {
+    "dock": "left"
+  },
+  "icon_theme": {
+    "mode": "light",
+    "light": "Zed (Default)",
+    "dark": "Zed (Default)"
+  },
+  "agent": {
+    "sandbox_permissions": {
+      "network_hosts": [
+        "zed.dev",
+        "raw.githubusercontent.com",
+        "www.lazyvim.org"
+      ]
+    },
+    "tool_permissions": {
+      "tools": {
+        "move_path": {
+          "always_allow": [
+            {
+              "pattern": "^sql/src/features/qa_agentic/services/"
+            }
+          ]
+        },
+        "terminal": {
+          "default": "allow"
+        }
+      }
+    },
+    "dock": "right",
+    "default_profile": "write",
+    "default_model": {
+      "provider": "Z.AI Coding",
+      "model": "glm-4.7",
+      "enable_thinking": false
+    },
+    "favorite_models": [
+      {
+        "provider": "Minimax",
+        "model": "MiniMax-M2.7",
+        "enable_thinking": false
+      },
+      {
+        "provider": "Minimax",
+        "model": "MiniMax-M2.5",
+        "enable_thinking": false
+      }
+    ],
+    "model_parameters": []
+  },
+  "language_models": {
+    "openai_compatible": {
+      "Z.AI Coding": {
+        "api_url": "https://api.z.ai/api/coding/paas/v4",
+        "available_models": [
+          {
+            "name": "glm-5.1",
+            "max_tokens": 200000,
+            "max_output_tokens": 128000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": true,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": true,
+              "chat_completions": true,
+              "interleaved_reasoning": false
+            }
+          },
+          {
+            "name": "glm-5.2[1m]",
+            "max_tokens": 1000000,
+            "max_output_tokens": 128000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": true,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": true,
+              "chat_completions": true,
+              "interleaved_reasoning": false
+            }
+          },
+          {
+            "name": "glm-4.7",
+            "max_tokens": 200000,
+            "max_output_tokens": 128000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": true,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": true,
+              "chat_completions": true,
+              "interleaved_reasoning": false
+            }
+          },
+          {
+            "name": "glm-4.5-air",
+            "max_tokens": 128000,
+            "max_output_tokens": 96000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false
+            }
+          },
+          {
+            "name": "glm-5.2",
+            "max_tokens": 200000,
+            "max_output_tokens": 128000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": true,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": true,
+              "chat_completions": true,
+              "interleaved_reasoning": false
+            }
+          }
+        ]
+      },
+      "Minimax": {
+        "api_url": "https://api.minimax.io/v1",
+        "available_models": [
+          {
+            "name": "MiniMax-M2.7",
+            "max_tokens": 200000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": true,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": true,
+              "chat_completions": true
+            }
+          },
+          {
+            "name": "MiniMax-M2.5",
+            "max_tokens": 200000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": true,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": true,
+              "chat_completions": true
+            }
+          }
+        ]
+      }
+    }
+  },
+  "hover_popover_enabled": true,
+  "vim": {
+    "toggle_relative_line_numbers": true,
+    "use_system_clipboard": "always",
+    "use_smartcase_find": true,
+    "gdefault": true,
+    "default_mode": "normal"
+  },
+  "toolbar": {
+    "code_actions": true
+  },
+  "prettier": {
+    "allowed": true
+  },
+  "which_key": {
+    "enabled": true
+  },
+  "agent_servers": {},
+  "base_keymap": "VSCode",
+  "show_signature_help_after_edits": true,
+  "auto_signature_help": false,
+  "relative_line_numbers": "enabled",
+  "sticky_scroll": {
+    "enabled": false
+  },
+  "gutter": {
+    "min_line_number_digits": 2,
+    "line_numbers": true
+  },
+  "minimap": {
+    "show": "never"
+  },
+  "cursor_shape": "bar",
+  "cursor_blink": true,
+  "buffer_font_weight": 500.0,
+  "buffer_font_family": "CaskaydiaCove Nerd Font Mono",
+  "buffer_font_size": 14.5,
+  "buffer_line_height": {
+    "custom": 1.35
+  },
+  "ui_font_family": "CaskaydiaCove Nerd Font",
+  "ui_font_size": 14.5,
+  "ui_font_weight": 500.0,
+  "terminal": {
+    "font_family": "CaskaydiaCove Nerd Font Mono",
+    "font_size": 14.5,
+    "font_weight": 500.0
+  },
+  "file_types": {
+    "plaintext": [
+      "*.conf"
+    ]
+  },
+  "show_whitespaces": "selection",
+  "vim_mode": true,
+  "theme": {
+    "mode": "dark",
+    "light": "Ayu Light",
+    "dark": "Catppuccin Mocha"
+  },
+  "format_on_save": "on",
+  "formatter": "auto",
+  "remove_trailing_whitespace_on_save": false,
+  "ensure_final_newline_on_save": true,
+  "code_actions_on_format": {
+    "source.organizeImports": true,
+    "source.fixAll.ruff": true
+  },
+  "languages": {
+    "Go": {
+      "language_servers": [
+        "gopls"
+      ],
+      "formatter": {
+        "external": {
+          "command": "/home/dhanunjay/.local/share/nvim/mason/bin/gofumpt",
+          "arguments": []
+        }
+      },
+      "format_on_save": "on",
+      "code_actions_on_format": {
+        "source.organizeImports": true
+      }
+    },
+    "Python": {
+      "language_servers": [
+        "pyright",
+        "ruff"
+      ],
+      "formatter": {
+        "language_server": {
+          "name": "ruff"
+        }
+      },
+      "format_on_save": "on",
+      "code_actions_on_format": {
+        "source.organizeImports.ruff": true,
+        "source.fixAll.ruff": true
+      }
+    },
+    "Lua": {
+      "formatter": {
+        "external": {
+          "command": "/home/dhanunjay/.local/share/nvim/mason/bin/stylua",
+          "arguments": [
+            "--stdin-filepath",
+            "{buffer_path}",
+            "-"
+          ]
+        }
+      },
+      "format_on_save": "on"
+    },
+    "Bash": {
+      "formatter": {
+        "external": {
+          "command": "/home/dhanunjay/.local/share/nvim/mason/bin/shfmt",
+          "arguments": [
+            "-i",
+            "2",
+            "-ci",
+            "-"
+          ]
+        }
+      },
+      "format_on_save": "on"
+    },
+    "JSON": {
+      "formatter": "prettier",
+      "format_on_save": "on",
+      "prettier": {
+        "allowed": true
+      }
+    },
+    "JSONC": {
+      "formatter": "prettier",
+      "format_on_save": "on"
+    },
+    "TypeScript": {
+      "formatter": "language_server",
+      "format_on_save": "on"
+    },
+    "JavaScript": {
+      "formatter": "prettier",
+      "format_on_save": "on"
+    },
+    "Markdown": {
+      "formatter": "prettier",
+      "format_on_save": "on"
+    },
+    "YAML": {
+      "formatter": "prettier",
+      "format_on_save": "on"
+    }
+  },
+  "lsp": {
+    "gopls": {
+      "binary": {
+        "path": "/home/dhanunjay/.local/share/nvim/mason/bin/gopls",
+        "arguments": []
+      },
+      "settings": {
+        "hints": {
+          "assignVariableTypes": false,
+          "compositeLiteralFields": false,
+          "compositeLiteralTypes": false,
+          "constantValues": false,
+          "functionTypeParameters": false,
+          "parameterNames": false,
+          "rangeVariableTypes": false
+        },
+        "gofumpt": true,
+        "staticcheck": true
+      }
+    },
+    "pyright": {
+      "binary": {
+        "path": "/home/dhanunjay/.local/share/nvim/mason/bin/pyright-langserver",
+        "arguments": [
+          "--stdio"
+        ]
+      }
+    },
+    "ruff": {
+      "binary": {
+        "path": "/home/dhanunjay/.local/share/nvim/mason/bin/ruff",
+        "arguments": [
+          "server"
+        ]
+      }
+    },
+    "lua-language-server": {
+      "binary": {
+        "path": "/home/dhanunjay/.local/share/nvim/mason/bin/lua-language-server",
+        "arguments": []
+      }
+    }
+  },
+  "formatter_settings": {
+    "go": {
+      "gofumpt": true
+    }
+  }
+}

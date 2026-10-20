@@ -1,0 +1,6 @@
+{
+  "context": "VimControl && !menu",
+  "bindings": {
+__VIM_BINDINGS__
+  }
+}

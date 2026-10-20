@@ -1,0 +1,88 @@
+[
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+__VIM_BINDINGS__
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "<": "editor::Outdent",
+      ">": "editor::Indent",
+      "J": "editor::MoveLineDown",
+      "K": "editor::MoveLineUp",
+      "ctrl-c": "editor::Copy",
+      "ctrl-shift-v": "editor::Paste",
+      "ctrl-x": "editor::Cut",
+      "space g h s": "git::StageAndNext",
+      "space g h r": "git::Restore"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "h": "project_panel::CollapseSelectedEntry",
+      "l": "project_panel::ExpandSelectedEntry",
+      "a": "project_panel::NewFile",
+      "shift-a": "project_panel::NewDirectory",
+      "d": [
+        "project_panel::Trash",
+        {
+          "skip_prompt": false
+        }
+      ],
+      "r": "project_panel::Rename",
+      "c": "project_panel::Copy",
+      "p": "project_panel::Paste",
+      "x": "project_panel::Cut",
+      "y": "workspace::CopyPath",
+      "enter": "project_panel::OpenPermanent",
+      "s": "project_panel::OpenSplitVertical",
+      "shift-s": "project_panel::OpenSplitHorizontal",
+      "q": "workspace::ToggleLeftDock",
+      "shift-y": "workspace::CopyRelativePath",
+      "ctrl-h": "project_panel::CollapseAllEntries",
+      "ctrl-l": "project_panel::ExpandAllEntries"
+    }
+  },
+  {
+    "context": "Editor && !VimControl",
+    "bindings": {
+      "ctrl-x": "editor::Cut",
+      "ctrl-shift-/": "editor::ToggleComments",
+      "shift-alt-f": "editor::Format",
+      "ctrl-y": "editor::ConfirmCompletion",
+      "ctrl-shift-c": "editor::Copy",
+      "ctrl-shift-v": "editor::Paste",
+      "ctrl-c": "editor::Copy",
+      "ctrl-v": "editor::Paste"
+    }
+  },
+  {
+    "context": "menu",
+    "bindings": {
+      "ctrl-y": "menu::Confirm"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-c": "editor::Copy",
+      "ctrl-v": "editor::Paste",
+      "ctrl-x": "editor::Cut",
+      "ctrl-a": "editor::SelectAll",
+      "ctrl-shift-c": "editor::Copy",
+      "ctrl-shift-v": "editor::Paste"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-c": "terminal::Copy",
+      "ctrl-v": "terminal::Paste",
+      "ctrl-shift-c": "terminal::Copy",
+      "ctrl-shift-v": "terminal::Paste"
+    }
+  }
+]

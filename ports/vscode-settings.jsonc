@@ -1,0 +1,344 @@
+// ---------------------------------------------------------------------------
+// VSCode port of the shared editor setup.
+//
+// Source of truth: ~/.config/nvim/keymaps.json  (canonical keymap spec)
+// Rendered by:    python3 scripts/render-ports.py
+//
+// The `vim.normalModeKeyBindings*` blocks are GENERATED - do not edit them by
+// hand, edit keymaps.json and re-render.
+// ---------------------------------------------------------------------------
+{
+  // =========================================================================
+  // THEME - Catppuccin Mocha, same as Neovim and Zed
+  // =========================================================================
+  "workbench.colorTheme": "Catppuccin Mocha",
+  "workbench.preferredDarkColorTheme": "Catppuccin Mocha",
+  "window.autoDetectColorScheme": false,
+  "catppuccin.italicComments": true,
+  "catppuccin.italicKeywords": true,
+
+  "workbench.colorCustomizations": {
+    "[Catppuccin Mocha]": {
+      // Pitch-black surfaces (Neovim is transparent, Zed is near-black)
+      "editor.background": "#000000",
+      "sideBar.background": "#000000",
+      "activityBar.background": "#000000",
+      "panel.background": "#000000",
+      "terminal.background": "#000000",
+      "editorGutter.background": "#000000",
+      "editorHoverWidget.background": "#000000",
+      "peekViewEditor.background": "#000000",
+      "editorSuggestWidget.background": "#000000",
+      "editorGroupHeader.tabsBackground": "#000000",
+      "tab.inactiveBackground": "#000000",
+      "statusBar.background": "#000000",
+      "statusBar.noFolderBackground": "#000000",
+      "menu.background": "#000000",
+      "list.activeSelectionBackground": "#181825",
+      "list.inactiveSelectionBackground": "#181825",
+      "list.hoverBackground": "#18182580",
+      "badge.background": "#45475a",
+      "activityBarBadge.background": "#45475a",
+      "scrollbarSlider.background": "#585b7040",
+      "scrollbarSlider.hoverBackground": "#585b7060",
+
+      // 40% blend of surface0, same trick as the Kanagawa setup
+      "editorHoverWidget.border": "#31324466",
+      "peekView.border": "#31324466",
+      "editorSuggestWidget.border": "#31324466",
+      "input.border": "#31324466",
+      "panel.border": "#31324466",
+      "statusBar.border": "#31324466",
+      "tab.border": "#31324466",
+      "menu.border": "#31324466",
+
+      // Status bar
+      "statusBar.foreground": "#a6adc8",
+      "statusBarItem.hoverBackground": "#313244",
+      "statusBar.debuggingBackground": "#f38ba8",
+
+      // Diagnostics (Catppuccin Mocha palette)
+      "editorError.foreground": "#f38ba8",
+      "editorError.background": "#f38ba8f2",
+      "editorWarning.foreground": "#fab387",
+      "editorWarning.background": "#fab387f2",
+      "editorInfo.foreground": "#89b4fa",
+      "editorInfo.background": "#89b4faf2",
+      "editorHint.foreground": "#a6adc8",
+      "editorError.foreground": "#f38ba8",
+
+      // Cursor / line highlight
+      "editorCursor.background": "#000000",
+      "editorCursor.foreground": "#f5e0dc99",
+      "editor.lineHighlightBackground": "#000000",
+      "editorLineNumber.foreground": "#585b70",
+      "editorLineNumber.activeForeground": "#cba6f7",
+      "editorIndentGuide.background1": "#31324480",
+      "editorIndentGuide.activeBackground1": "#45475a",
+    },
+  },
+
+  "editor.tokenColorCustomizations": {
+    "[Catppuccin Mocha]": {
+      "comments": { "fontStyle": "italic" },
+      "keywords": { "fontStyle": "italic" },
+      "types": { "fontStyle": "italic" },
+      "textMateRules": [
+        {
+          "scope": "keyword.control",
+          "settings": { "fontStyle": "bold" },
+        },
+      ],
+    },
+  },
+
+  // =========================================================================
+  // EDITOR - mirrors the Neovim / Zed feel
+  // =========================================================================
+  "editor.fontFamily": "CaskaydiaCove Nerd Font",
+  "editor.fontSize": 14.5,
+  "editor.fontWeight": "500",
+  "editor.fontLigatures": true,
+  "editor.lineNumbers": "relative",
+  "editor.minimap.enabled": false,
+  "editor.minimap.sectionHeaderFontSize": 11,
+  "editor.cursorStyle": "line",
+  "editor.cursorWidth": 2,
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "off",
+  "editor.renderWhitespace": "selection",
+  "editor.occurrencesHighlight": "off",
+  "editor.stickyScroll.enabled": false,
+  "editor.semanticHighlighting.enabled": true,
+  "editor.parameterHints.enabled": true,
+  "editor.hover.enabled": "on",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.codeActionsOnSaveTimeout": 2000,
+  "editor.acceptSuggestionOnEnter": "off",
+  "editor.suggest.insertMode": "replace",
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.detectIndentation": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.scrollBeyondLastLine": false,
+  "editor.rulers": [80, 100, 120],
+
+  // Formatting - same policy as Neovim (conform) and Zed (format_on_save)
+  "editor.formatOnSave": true,
+  "editor.formatOnType": false,
+  "editor.formatOnSaveMode": "file",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll.ruff": "explicit",
+  },
+
+  // =========================================================================
+  // PER-LANGUAGE (indent + formatter parity with Neovim and Zed)
+  // =========================================================================
+  "[go]": {
+    "editor.insertSpaces": false,
+    "editor.tabSize": 4,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "golang.go",
+  },
+  "[python]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "diffEditor.ignoreTrimWhitespace": false,
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[yml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+
+  // =========================================================================
+  // WORKBENCH
+  // =========================================================================
+  "workbench.startupEditor": "none",
+  "window.titleBarStyle": "custom",
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "workbench.iconTheme": "vs-seti",
+  "workbench.tree.indent": 8,
+  "scm.defaultViewMode": "tree",
+  "diffEditor.renderSideBySide": false,
+  "chat.viewSessions.orientation": "stacked",
+  "update.mode": "none",
+  "extensions.autoUpdate": "off",
+  "extensions.ignoreRecommendations": true,
+  "extensions.experimental.affinity": {
+    "vscodevim.vim": 1,
+  },
+  "telemetry.telemetryLevel": "off",
+
+  // =========================================================================
+  // EXPLORER
+  // =========================================================================
+  "explorer.confirmDragAndDrop": false,
+  "explorer.autoReveal": "focusNoScroll",
+  "explorer.confirmDelete": false,
+
+  // =========================================================================
+  // TERMINAL
+  // =========================================================================
+  "terminal.integrated.fontLigatures.enabled": true,
+  "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font Mono",
+  "terminal.integrated.fontSize": 14.5,
+  "terminal.integrated.inheritEnv": false,
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.env.windows": {},
+
+  // =========================================================================
+  // FILES
+  // =========================================================================
+  "files.associations": {
+    "*.conf": "plaintext",
+  },
+  "files.watcherExclude": {
+    "**/.bloop": true,
+    "**/.metals": true,
+    "**/.ammonite": true,
+  },
+  "files.trimTrailingWhitespace": false,
+  "files.insertFinalNewline": true,
+
+  // =========================================================================
+  // GIT / GITHUB
+  // =========================================================================
+  "git.openRepositoryInParentFolders": "never",
+  "git.ignoreLegacyWarning": true,
+  "git.enableSmartCommit": true,
+
+  // =========================================================================
+  // PYTHON (Pylance on purpose - see docs/EDITOR-PARITY.md)
+  // =========================================================================
+  "python.languageServer": "Pylance",
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportShadowedImports": "none",
+  },
+  "interactiveWindow.executeWithShiftEnter": true,
+  "jupyter.askForKernelRestart": false,
+
+  // =========================================================================
+  // NOTEBOOKS
+  // =========================================================================
+  "notebook.lineNumbers": "on",
+  "notebook.editorOptionsCustomizations": {},
+  "notebook.output.fontSize": 17,
+  "notebook.output.minimalErrorRendering": true,
+  "notebook.output.textLineLimit": 1000,
+
+  // =========================================================================
+  // TODO / COMMENT TAGS
+  // =========================================================================
+  "better-comments.tags": [
+    { "tag": "TODO" },
+    { "tag": "FIX" },
+    { "tag": "BUG" },
+    { "tag": "HACK" },
+    { "tag": "OPTIM" },
+    { "tag": "PERF" },
+    { "tag": "NOTE" },
+    { "tag": "REVIEW" },
+    { "tag": "TEST" },
+    { "tag": "SECURITY" },
+    { "tag": "DEPRECATED", "strikethrough": true },
+    { "tag": "DOUBT" },
+    { "tag": "DOCS" },
+    { "tag": "TEMP" },
+    { "tag": "IDEA" },
+  ],
+  "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|\\*)\\s*($TAGS)",
+  "todo-tree.general.tags": [
+    "BUG",
+    "HACK",
+    "FIXME",
+    "TODO",
+    "XXX",
+    "[ ]",
+    "[x]",
+    "REVIEW",
+    "NOTE",
+    "OPTIM",
+  ],
+  "todohighlight.defaultStyle": {},
+
+  // =========================================================================
+  // COPILOT - disabled everywhere, matching Neovim and Zed
+  // =========================================================================
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false,
+  },
+
+  // =========================================================================
+  // VIM MODE
+  // =========================================================================
+  "vim.leader": "<space>",
+  "vim.smartRelativeLine": true,
+  "vim.autoindent": false,
+  "vim.statusBarColorControl": false,
+  "vim.useSystemClipboard": true,
+  "vim.handleKeys": {
+    "<C-d>": true,
+    "<C-s>": false,
+    "<C-z>": false,
+  },
+
+  // --- GENERATED from keymaps.json - do not edit by hand -------------------
+  "vim.normalModeKeyBindingsNonRecursive": [
+__VIM_NORMAL__
+  ],
+
+  "vim.visualModeKeyBindings": [
+    {
+      "before": ["<"],
+      "after": ["<", "g", "v"],
+    },
+    {
+      "before": [">"],
+      "after": [">", "g", "v"],
+    },
+    {
+      "before": ["J"],
+      "commands": [
+        {
+          "command": "editor.action.moveLinesDownAction",
+          "silent": true,
+        },
+      ],
+    },
+    {
+      "before": ["K"],
+      "commands": [
+        {
+          "command": "editor.action.moveLinesUpAction",
+          "silent": true,
+        },
+      ],
+    },
+  ],
+  // --- END GENERATED -------------------------------------------------------
+}

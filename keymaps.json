@@ -1,0 +1,1568 @@
+{
+  "version": 1,
+  "updated": "2026-10-20",
+  "leader": "space",
+  "description": "Canonical keymap spec shared by Neovim (LazyVim), VSCode (VSCodeVim) and Zed (native vim). Neovim is the source of truth; VSCode and Zed are ports. A null editor means that editor has no equivalent capability.",
+  "key_notation": {
+    "canonical": "space = leader, then literal keys; ctrl-x / shift-x / alt-x for modifiers; F5 style for function keys",
+    "nvim": "<leader> expands to a literal space; ctrl-x is <C-x>; shift-x is <S-x>",
+    "vscode": "space is the space key; ctrl+x is written ctrl+x",
+    "zed": "space is the space key; ctrl-x is written ctrl-x"
+  },
+  "groups": [
+    {
+      "name": "Files & search",
+      "maps": [
+        {
+          "id": "files.find.root",
+          "keys": "space space",
+          "action": "Find files (project root)",
+          "nvim": {
+            "key": "<leader><space>",
+            "impl": "telescope find_files (root)"
+          },
+          "vscode": {
+            "key": "space space",
+            "command": "workbench.action.quickOpen"
+          },
+          "zed": {
+            "key": "space space",
+            "action": "file_finder::Toggle"
+          }
+        },
+        {
+          "id": "files.grep.root",
+          "keys": "space /",
+          "action": "Live grep (project root)",
+          "nvim": {
+            "key": "<leader>/",
+            "impl": "telescope live_grep (root)"
+          },
+          "vscode": {
+            "key": "space /",
+            "command": "workbench.action.findInFiles"
+          },
+          "zed": {
+            "key": "space /",
+            "action": "pane::DeploySearch"
+          }
+        },
+        {
+          "id": "files.find.git",
+          "keys": "space f g",
+          "action": "Find files tracked by git",
+          "nvim": {
+            "key": "<leader>fg",
+            "impl": "telescope find_files (git_files)"
+          },
+          "vscode": {
+            "key": "space f g",
+            "command": "workbench.action.quickOpen"
+          },
+          "zed": {
+            "key": "space f g",
+            "action": "file_finder::Toggle"
+          }
+        },
+        {
+          "id": "files.recent",
+          "keys": "space f r",
+          "action": "Recently opened files",
+          "nvim": {
+            "key": "<leader>fr",
+            "impl": "telescope oldfiles"
+          },
+          "vscode": {
+            "key": "space f r",
+            "command": "workbench.action.openRecent"
+          },
+          "zed": {
+            "key": "space f r",
+            "action": "projects::OpenRecent"
+          }
+        },
+        {
+          "id": "files.buffers",
+          "keys": "space f b",
+          "action": "Buffer picker",
+          "nvim": {
+            "key": "<leader>fb",
+            "impl": "telescope buffers"
+          },
+          "vscode": {
+            "key": "space f b",
+            "command": "workbench.action.showAllEditors"
+          },
+          "zed": {
+            "key": "space f b",
+            "action": "buffer_search::Deploy"
+          }
+        },
+        {
+          "id": "files.buffers.all",
+          "keys": "space f B",
+          "action": "All buffers (including unlisted)",
+          "nvim": {
+            "key": "<leader>fB",
+            "impl": "telescope buffers --all"
+          },
+          "vscode": {
+            "key": "space f B",
+            "command": "workbench.action.showAllEditors"
+          },
+          "zed": {
+            "key": "space f B",
+            "action": "buffer_search::Deploy"
+          }
+        },
+        {
+          "id": "files.browse.dir",
+          "keys": "space f m",
+          "action": "Browse files (directory of current file)",
+          "nvim": {
+            "key": "<leader>fm",
+            "impl": "mini.files (dir of current file)"
+          },
+          "vscode": {
+            "key": "space f m",
+            "command": "workbench.view.explorer"
+          },
+          "zed": {
+            "key": "space f m",
+            "action": "project_panel::ToggleFocus"
+          }
+        },
+        {
+          "id": "files.browse.cwd",
+          "keys": "space f M",
+          "action": "Browse files (working directory)",
+          "nvim": {
+            "key": "<leader>fM",
+            "impl": "mini.files (cwd)"
+          },
+          "vscode": {
+            "key": "space f M",
+            "command": "workbench.view.explorer"
+          },
+          "zed": {
+            "key": "space f M",
+            "action": "project_panel::ToggleFocus"
+          }
+        },
+        {
+          "id": "files.explorer",
+          "keys": "space e",
+          "action": "File explorer (project root)",
+          "nvim": {
+            "key": "<leader>e",
+            "impl": "neo-tree (root dir)"
+          },
+          "vscode": {
+            "key": "space e",
+            "command": "workbench.view.explorer"
+          },
+          "zed": {
+            "key": "space e",
+            "action": "project_panel::ToggleFocus"
+          }
+        },
+        {
+          "id": "files.explorer.toggle",
+          "keys": "space E",
+          "action": "Toggle explorer / sidebar panel",
+          "nvim": {
+            "key": "<leader>E",
+            "impl": "neo-tree toggle (overrides LazyVim's <leader>E = explorer cwd)"
+          },
+          "vscode": {
+            "key": "space E",
+            "command": "workbench.action.toggleSidebarVisibility"
+          },
+          "zed": {
+            "key": "space E",
+            "action": "workspace::ToggleLeftDock"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Buffers & tabs",
+      "maps": [
+        {
+          "id": "buffers.switch",
+          "keys": "space ,",
+          "action": "Switch buffer",
+          "nvim": {
+            "key": "<leader>,",
+            "impl": "telescope buffers"
+          },
+          "vscode": {
+            "key": "space ,",
+            "command": "workbench.action.showAllEditors"
+          },
+          "zed": {
+            "key": "space ,",
+            "action": "tab_switcher::Toggle"
+          }
+        },
+        {
+          "id": "buffers.explorer",
+          "keys": "space b e",
+          "action": "Buffer explorer",
+          "nvim": {
+            "key": "<leader>be",
+            "impl": "telescope buffers"
+          },
+          "vscode": {
+            "key": "space b e",
+            "command": "workbench.action.showAllEditors"
+          },
+          "zed": {
+            "key": "space b e",
+            "action": "buffer_search::Deploy"
+          }
+        },
+        {
+          "id": "buffers.pin",
+          "keys": "space b p",
+          "action": "Pin buffer / tab",
+          "nvim": {
+            "key": "<leader>bp",
+            "impl": "harpoon mark toggle"
+          },
+          "vscode": {
+            "key": "space b p",
+            "command": "workbench.action.pinEditor"
+          },
+          "zed": {
+            "key": "space b p",
+            "action": "pane::TogglePinTab"
+          }
+        },
+        {
+          "id": "buffers.delete",
+          "keys": "space b d",
+          "action": "Delete buffer",
+          "nvim": {
+            "key": "<leader>bd",
+            "impl": "snacks.bufdelete"
+          },
+          "vscode": {
+            "key": "space b d",
+            "command": "workbench.action.closeActiveEditor"
+          },
+          "zed": {
+            "key": "space b d",
+            "action": "pane::CloseActiveItem"
+          }
+        },
+        {
+          "id": "buffers.close.left",
+          "keys": "space b l",
+          "action": "Close buffers to the left",
+          "nvim": {
+            "key": "<leader>bl",
+            "impl": "fzf/telescope delete buffers left"
+          },
+          "vscode": {
+            "key": "space b l",
+            "command": "workbench.action.closeEditorsToTheLeft"
+          },
+          "zed": {
+            "key": "space b l",
+            "action": "pane::CloseItemsToTheLeft"
+          }
+        },
+        {
+          "id": "buffers.close.right",
+          "keys": "space b r",
+          "action": "Close buffers to the right",
+          "nvim": {
+            "key": "<leader>br",
+            "impl": "fzf/telescope delete buffers right"
+          },
+          "vscode": {
+            "key": "space b r",
+            "command": "workbench.action.closeEditorsToTheRight"
+          },
+          "zed": {
+            "key": "space b r",
+            "action": "pane::CloseItemsToTheRight"
+          }
+        },
+        {
+          "id": "buffers.next",
+          "keys": "] b",
+          "action": "Next buffer",
+          "nvim": {
+            "key": "]b",
+            "impl": "bnext"
+          },
+          "vscode": {
+            "key": "] b",
+            "command": "workbench.action.nextEditor"
+          },
+          "zed": {
+            "key": "] b",
+            "action": "pane::ActivateNextItem"
+          }
+        },
+        {
+          "id": "buffers.prev",
+          "keys": "[ b",
+          "action": "Previous buffer",
+          "nvim": {
+            "key": "[b",
+            "impl": "bprevious"
+          },
+          "vscode": {
+            "key": "[ b",
+            "command": "workbench.action.previousEditor"
+          },
+          "zed": {
+            "key": "[ b",
+            "action": "pane::ActivatePreviousItem"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Windows & panes",
+      "maps": [
+        {
+          "id": "windows.split.right",
+          "keys": "space w v",
+          "action": "Split to the right (vertical split)",
+          "nvim": {
+            "key": "<leader>|",
+            "impl": "<C-w>v"
+          },
+          "vscode": {
+            "key": "space w v",
+            "command": "workbench.action.splitEditorRight"
+          },
+          "zed": {
+            "key": "space w v",
+            "action": "pane::SplitRight"
+          }
+        },
+        {
+          "id": "windows.split.down",
+          "keys": "space w s",
+          "action": "Split below (horizontal split)",
+          "nvim": {
+            "key": "<leader>-",
+            "impl": "<C-w>s"
+          },
+          "vscode": {
+            "key": "space w s",
+            "command": "workbench.action.splitEditorDown"
+          },
+          "zed": {
+            "key": "space w s",
+            "action": "pane::SplitDown"
+          }
+        },
+        {
+          "id": "windows.close",
+          "keys": "space w d",
+          "action": "Close window / editor group",
+          "nvim": {
+            "key": "<leader>wd",
+            "impl": "<C-w>c"
+          },
+          "vscode": {
+            "key": "space w d",
+            "command": "workbench.action.closeEditorsInGroup"
+          },
+          "zed": {
+            "key": "space w d",
+            "action": "pane::CloseActiveItem"
+          }
+        },
+        {
+          "id": "windows.zoom",
+          "keys": "space w m",
+          "action": "Toggle zoom (maximize pane)",
+          "nvim": {
+            "key": "<leader>wm",
+            "impl": "snacks.toggle.zoom"
+          },
+          "vscode": {
+            "key": "space w m",
+            "command": "workbench.action.toggleMaximizeEditorGroup"
+          },
+          "zed": {
+            "key": "space w m",
+            "action": "workspace::ToggleZoom"
+          }
+        },
+        {
+          "id": "windows.focus.left",
+          "keys": "ctrl-h",
+          "action": "Focus pane on the left",
+          "nvim": {
+            "key": "<C-h>",
+            "impl": "<C-w>h"
+          },
+          "vscode": {
+            "key": "ctrl+h",
+            "command": "workbench.action.focusLeftGroup"
+          },
+          "zed": {
+            "key": "ctrl-h",
+            "action": "workspace::ActivatePaneLeft"
+          }
+        },
+        {
+          "id": "windows.focus.down",
+          "keys": "ctrl-j",
+          "action": "Focus pane below",
+          "nvim": {
+            "key": "<C-j>",
+            "impl": "<C-w>j"
+          },
+          "vscode": {
+            "key": "ctrl+j",
+            "command": "workbench.action.focusBelowGroup"
+          },
+          "zed": {
+            "key": "ctrl-j",
+            "action": "workspace::ActivatePaneDown"
+          }
+        },
+        {
+          "id": "windows.focus.up",
+          "keys": "ctrl-k",
+          "action": "Focus pane above",
+          "nvim": {
+            "key": "<C-k>",
+            "impl": "<C-w>k"
+          },
+          "vscode": {
+            "key": "ctrl+k",
+            "command": "workbench.action.focusAboveGroup"
+          },
+          "zed": {
+            "key": "ctrl-k",
+            "action": "workspace::ActivatePaneUp"
+          }
+        },
+        {
+          "id": "windows.focus.right",
+          "keys": "ctrl-l",
+          "action": "Focus pane on the right",
+          "nvim": {
+            "key": "<C-l>",
+            "impl": "<C-w>l"
+          },
+          "vscode": {
+            "key": "ctrl+l",
+            "command": "workbench.action.focusRightGroup"
+          },
+          "zed": {
+            "key": "ctrl-l",
+            "action": "workspace::ActivatePaneRight"
+          }
+        }
+      ]
+    },
+    {
+      "name": "LSP navigation",
+      "maps": [
+        {
+          "id": "lsp.definition",
+          "keys": "g d",
+          "action": "Go to definition",
+          "nvim": {
+            "key": "gd",
+            "impl": "vim.lsp.buf.definition"
+          },
+          "vscode": {
+            "key": "g d",
+            "command": "editor.action.revealDefinition"
+          },
+          "zed": {
+            "key": "g d",
+            "action": "editor::GoToDefinition"
+          },
+          "conditional": true
+        },
+        {
+          "id": "lsp.references",
+          "keys": "g r",
+          "action": "Find references",
+          "nvim": {
+            "key": "gr",
+            "impl": "vim.lsp.buf.references"
+          },
+          "vscode": {
+            "key": "g r",
+            "command": "editor.action.goToReferences"
+          },
+          "zed": {
+            "key": "g r",
+            "action": "editor::FindAllReferences"
+          },
+          "conditional": true
+        },
+        {
+          "id": "lsp.implementation",
+          "keys": "g I",
+          "action": "Go to implementation",
+          "nvim": {
+            "key": "gI",
+            "impl": "vim.lsp.buf.implementation"
+          },
+          "vscode": {
+            "key": "g I",
+            "command": "editor.action.goToImplementation"
+          },
+          "zed": {
+            "key": "g I",
+            "action": "editor::GoToImplementation"
+          },
+          "conditional": true
+        },
+        {
+          "id": "lsp.type_definition",
+          "keys": "g y",
+          "action": "Go to type definition",
+          "nvim": {
+            "key": "gy",
+            "impl": "vim.lsp.buf.type_definition"
+          },
+          "vscode": {
+            "key": "g y",
+            "command": "editor.action.goToTypeDefinition"
+          },
+          "zed": {
+            "key": "g y",
+            "action": "editor::GoToTypeDefinition"
+          },
+          "conditional": true
+        },
+        {
+          "id": "lsp.hover",
+          "keys": "K",
+          "action": "Hover documentation",
+          "nvim": {
+            "key": "K",
+            "impl": "vim.lsp.buf.hover"
+          },
+          "vscode": {
+            "key": "K",
+            "command": "editor.action.showHover"
+          },
+          "zed": {
+            "key": "K",
+            "action": "editor::Hover"
+          },
+          "conditional": true
+        },
+        {
+          "id": "lsp.signature",
+          "keys": "g K",
+          "action": "Signature help",
+          "nvim": {
+            "key": "gK",
+            "impl": "vim.lsp.buf.signature_help"
+          },
+          "vscode": {
+            "key": "g K",
+            "command": "editor.action.triggerParameterHints"
+          },
+          "zed": {
+            "key": "g K",
+            "action": "editor::SignatureHelp"
+          },
+          "conditional": true
+        },
+        {
+          "id": "lsp.code_action",
+          "keys": "space c a",
+          "action": "Code action (quick fix)",
+          "nvim": {
+            "key": "<leader>ca",
+            "impl": "vim.lsp.buf.code_action"
+          },
+          "vscode": {
+            "key": "space c a",
+            "command": "editor.action.quickFix"
+          },
+          "zed": {
+            "key": "space c a",
+            "action": "editor::ToggleCodeActions"
+          },
+          "conditional": true
+        },
+        {
+          "id": "lsp.rename",
+          "keys": "space c r",
+          "action": "Rename symbol",
+          "nvim": {
+            "key": "<leader>cr",
+            "impl": "vim.lsp.buf.rename"
+          },
+          "vscode": {
+            "key": "space c r",
+            "command": "editor.action.rename"
+          },
+          "zed": {
+            "key": "space c r",
+            "action": "editor::Rename"
+          },
+          "conditional": true
+        },
+        {
+          "id": "lsp.reference.next",
+          "keys": "] ]",
+          "action": "Next reference",
+          "nvim": {
+            "key": "]]",
+            "impl": "trouble next reference"
+          },
+          "vscode": {
+            "key": "] ]",
+            "command": "editor.action.goToReferences"
+          },
+          "zed": {
+            "key": "] ]",
+            "action": "editor::GoToNextReference"
+          }
+        },
+        {
+          "id": "lsp.reference.prev",
+          "keys": "[ [",
+          "action": "Previous reference",
+          "nvim": {
+            "key": "[[",
+            "impl": "trouble previous reference"
+          },
+          "vscode": {
+            "key": "[ [",
+            "command": "editor.action.goToReferences"
+          },
+          "zed": {
+            "key": "[ [",
+            "action": "editor::GoToPreviousReference"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Diagnostics & todos",
+      "maps": [
+        {
+          "id": "diag.next",
+          "keys": "] d",
+          "action": "Next diagnostic",
+          "nvim": {
+            "key": "]d",
+            "impl": "vim.diagnostic.jump (next)"
+          },
+          "vscode": {
+            "key": "] d",
+            "command": "editor.action.marker.nextInFiles"
+          },
+          "zed": {
+            "key": "] d",
+            "action": "editor::GoToDiagnostic"
+          }
+        },
+        {
+          "id": "diag.prev",
+          "keys": "[ d",
+          "action": "Previous diagnostic",
+          "nvim": {
+            "key": "[d",
+            "impl": "vim.diagnostic.jump (prev)"
+          },
+          "vscode": {
+            "key": "[ d",
+            "command": "editor.action.marker.prevInFiles"
+          },
+          "zed": {
+            "key": "[ d",
+            "action": "editor::GoToPreviousDiagnostic"
+          }
+        },
+        {
+          "id": "diag.workspace",
+          "keys": "space x x",
+          "action": "Workspace diagnostics (Trouble / Problems)",
+          "nvim": {
+            "key": "<leader>xx",
+            "impl": "trouble workspace_diagnostics"
+          },
+          "vscode": {
+            "key": "space x x",
+            "command": "workbench.actions.view.problems"
+          },
+          "zed": {
+            "key": "space x x",
+            "action": "diagnostics::Deploy"
+          }
+        },
+        {
+          "id": "diag.buffer",
+          "keys": "space x X",
+          "action": "Buffer diagnostics",
+          "nvim": {
+            "key": "<leader>xX",
+            "impl": "trouble buffer_diagnostics"
+          },
+          "vscode": {
+            "key": "space x X",
+            "command": "workbench.actions.view.problems"
+          },
+          "zed": {
+            "key": "space x X",
+            "action": "diagnostics::Deploy"
+          }
+        },
+        {
+          "id": "diag.picker",
+          "keys": "space s d",
+          "action": "Diagnostics picker",
+          "nvim": {
+            "key": "<leader>sd",
+            "impl": "snacks.picker diagnostics"
+          },
+          "vscode": {
+            "key": "space s d",
+            "command": "workbench.actions.view.problems"
+          },
+          "zed": {
+            "key": "space s d",
+            "action": "diagnostics::Deploy"
+          }
+        },
+        {
+          "id": "todo.next",
+          "keys": "] t",
+          "action": "Next TODO comment",
+          "nvim": {
+            "key": "]t",
+            "impl": "todo-comments next"
+          },
+          "vscode": {
+            "key": "] t",
+            "command": "todo-tree.goToNext"
+          },
+          "zed": null
+        },
+        {
+          "id": "todo.prev",
+          "keys": "[ t",
+          "action": "Previous TODO comment",
+          "nvim": {
+            "key": "[t",
+            "impl": "todo-comments prev"
+          },
+          "vscode": {
+            "key": "[ t",
+            "command": "todo-tree.goToPrevious"
+          },
+          "zed": null
+        }
+      ]
+    },
+    {
+      "name": "Git",
+      "maps": [
+        {
+          "id": "git.ui.root",
+          "keys": "space g g",
+          "action": "Git UI (project root)",
+          "nvim": {
+            "key": "<leader>gg",
+            "impl": "lazygit (root dir)"
+          },
+          "vscode": {
+            "key": "space g g",
+            "command": "workbench.view.scm"
+          },
+          "zed": {
+            "key": "space g g",
+            "action": "git_panel::ToggleFocus"
+          }
+        },
+        {
+          "id": "git.ui.cwd",
+          "keys": "space g G",
+          "action": "Git UI (working directory)",
+          "nvim": {
+            "key": "<leader>gG",
+            "impl": "lazygit (cwd)"
+          },
+          "vscode": {
+            "key": "space g G",
+            "command": "workbench.view.scm"
+          },
+          "zed": {
+            "key": "space g G",
+            "action": "git_panel::ToggleFocus"
+          }
+        },
+        {
+          "id": "git.status",
+          "keys": "space g s",
+          "action": "Git status",
+          "nvim": {
+            "key": "<leader>gs",
+            "impl": "snacks git status"
+          },
+          "vscode": {
+            "key": "space g s",
+            "command": "workbench.view.scm"
+          },
+          "zed": {
+            "key": "space g s",
+            "action": "git_panel::ToggleFocus"
+          }
+        },
+        {
+          "id": "git.commits",
+          "keys": "space g c",
+          "action": "Git commits",
+          "nvim": {
+            "key": "<leader>gc",
+            "impl": "telescope/fzf git_commits"
+          },
+          "vscode": {
+            "key": "space g c",
+            "command": "workbench.view.scm"
+          },
+          "zed": {
+            "key": "space g c",
+            "action": "git::Commit"
+          }
+        },
+        {
+          "id": "git.hunk.stage",
+          "keys": "space g h s",
+          "action": "Stage hunk",
+          "nvim": {
+            "key": "<leader>ghs",
+            "impl": "gitsigns stage_hunk"
+          },
+          "vscode": {
+            "key": "space g h s",
+            "command": "git.stageSelectedRanges"
+          },
+          "zed": {
+            "key": "space g h s",
+            "action": "git::StageAndNext"
+          },
+          "conditional": true
+        },
+        {
+          "id": "git.hunk.reset",
+          "keys": "space g h r",
+          "action": "Reset hunk",
+          "nvim": {
+            "key": "<leader>ghr",
+            "impl": "gitsigns reset_hunk"
+          },
+          "vscode": {
+            "key": "space g h r",
+            "command": "git.unstage"
+          },
+          "zed": {
+            "key": "space g h r",
+            "action": "git::Restore"
+          },
+          "conditional": true
+        },
+        {
+          "id": "git.hunk.preview",
+          "keys": "space g h p",
+          "action": "Preview hunk inline",
+          "nvim": {
+            "key": "<leader>ghp",
+            "impl": "gitsigns preview_hunk_inline"
+          },
+          "vscode": {
+            "key": "space g h p",
+            "command": "git.openChange"
+          },
+          "zed": {
+            "key": "space g h p",
+            "action": "git::Diff"
+          },
+          "conditional": true
+        },
+        {
+          "id": "git.blame.line",
+          "keys": "space g h b",
+          "action": "Blame current line",
+          "nvim": {
+            "key": "<leader>ghb",
+            "impl": "gitsigns blame_line"
+          },
+          "vscode": {
+            "key": "space g h b",
+            "command": "git.blame"
+          },
+          "zed": {
+            "key": "space g h b",
+            "action": "editor::BlameHover"
+          },
+          "conditional": true
+        },
+        {
+          "id": "git.blame.buffer",
+          "keys": "space g h B",
+          "action": "Blame whole buffer",
+          "nvim": {
+            "key": "<leader>ghB",
+            "impl": "gitsigns blame"
+          },
+          "vscode": {
+            "key": "space g h B",
+            "command": "git.blame"
+          },
+          "zed": {
+            "key": "space g h B",
+            "action": "editor::BlameHover"
+          },
+          "conditional": true
+        },
+        {
+          "id": "git.hunk.next",
+          "keys": "] h",
+          "action": "Next git hunk",
+          "nvim": {
+            "key": "]h",
+            "impl": "gitsigns nav_hunk next"
+          },
+          "vscode": null,
+          "zed": {
+            "key": "] h",
+            "action": "editor::GoToHunk"
+          },
+          "conditional": true
+        },
+        {
+          "id": "git.hunk.prev",
+          "keys": "[ h",
+          "action": "Previous git hunk",
+          "nvim": {
+            "key": "[h",
+            "impl": "gitsigns nav_hunk prev"
+          },
+          "vscode": null,
+          "zed": {
+            "key": "[ h",
+            "action": "editor::GoToPreviousHunk"
+          },
+          "conditional": true
+        }
+      ]
+    },
+    {
+      "name": "Editing",
+      "maps": [
+        {
+          "id": "edit.comment",
+          "keys": "g c c",
+          "action": "Toggle comment on line",
+          "nvim": {
+            "key": "gcc",
+            "impl": "ts-comments"
+          },
+          "vscode": {
+            "key": "g c c",
+            "command": "editor.action.commentLine"
+          },
+          "zed": {
+            "key": "g c c",
+            "action": "editor::ToggleComments"
+          }
+        },
+        {
+          "id": "edit.format",
+          "keys": "space c f",
+          "action": "Format buffer",
+          "nvim": {
+            "key": "<leader>cf",
+            "impl": "conform.nvim"
+          },
+          "vscode": {
+            "key": "space c f",
+            "command": "editor.action.formatDocument"
+          },
+          "zed": {
+            "key": "space c f",
+            "action": "editor::Format"
+          }
+        },
+        {
+          "id": "edit.surround.add",
+          "keys": "g s a",
+          "action": "Add surrounding pair",
+          "nvim": {
+            "key": "gsa",
+            "impl": "mini.surround"
+          },
+          "vscode": null,
+          "zed": null
+        },
+        {
+          "id": "edit.surround.delete",
+          "keys": "g s d",
+          "action": "Delete surrounding pair",
+          "nvim": {
+            "key": "gsd",
+            "impl": "mini.surround"
+          },
+          "vscode": null,
+          "zed": null
+        },
+        {
+          "id": "edit.surround.replace",
+          "keys": "g s r",
+          "action": "Replace surrounding pair",
+          "nvim": {
+            "key": "gsr",
+            "impl": "mini.surround"
+          },
+          "vscode": null,
+          "zed": null
+        },
+        {
+          "id": "edit.increment",
+          "keys": "ctrl-a",
+          "action": "Increment number under cursor",
+          "nvim": {
+            "key": "<C-a>",
+            "impl": "dial.nvim"
+          },
+          "vscode": null,
+          "zed": null
+        },
+        {
+          "id": "edit.decrement",
+          "keys": "ctrl-x",
+          "action": "Decrement number under cursor",
+          "nvim": {
+            "key": "<C-x>",
+            "impl": "dial.nvim"
+          },
+          "vscode": null,
+          "zed": null
+        },
+        {
+          "id": "edit.cursor.below",
+          "keys": "ctrl-n",
+          "action": "Add cursor below (multi-cursor)",
+          "nvim": {
+            "key": "<C-n>",
+            "impl": "visual-multi find under"
+          },
+          "vscode": {
+            "key": "ctrl+n",
+            "command": "editor.action.insertCursorBelow"
+          },
+          "zed": {
+            "key": "ctrl-n",
+            "action": "editor::AddSelectionBelow"
+          }
+        },
+        {
+          "id": "edit.cursor.above",
+          "keys": "ctrl-shift-n",
+          "action": "Add cursor above (multi-cursor)",
+          "nvim": {
+            "key": "<C-Down>",
+            "impl": "visual-multi add cursor down"
+          },
+          "vscode": {
+            "key": "ctrl+shift+n",
+            "command": "editor.action.insertCursorAbove"
+          },
+          "zed": {
+            "key": "ctrl-shift-n",
+            "action": "editor::AddSelectionAbove"
+          }
+        },
+        {
+          "id": "edit.jump",
+          "keys": "s",
+          "action": "Jump to visible text (flash)",
+          "nvim": {
+            "key": "s",
+            "impl": "flash.nvim jump"
+          },
+          "vscode": null,
+          "zed": null
+        },
+        {
+          "id": "edit.jump.ts",
+          "keys": "S",
+          "action": "Jump to treesitter symbol (flash)",
+          "nvim": {
+            "key": "S",
+            "impl": "flash.nvim treesitter"
+          },
+          "vscode": null,
+          "zed": null
+        },
+        {
+          "id": "edit.yank.history",
+          "keys": "space p",
+          "action": "Paste from yank history",
+          "nvim": {
+            "key": "<leader>p",
+            "impl": "yanky / snacks paste history"
+          },
+          "vscode": null,
+          "zed": null
+        },
+        {
+          "id": "edit.copy",
+          "keys": "ctrl-c",
+          "action": "Copy to system clipboard",
+          "nvim": {
+            "key": "<C-c>",
+            "impl": "\"+y (yank to system clipboard)"
+          },
+          "vscode": {
+            "key": "ctrl+c",
+            "command": "editor.action.clipboardCopyAction"
+          },
+          "zed": {
+            "key": "ctrl-c",
+            "action": "editor::Copy"
+          }
+        },
+        {
+          "id": "edit.paste",
+          "keys": "ctrl-shift-v",
+          "action": "Paste from system clipboard",
+          "nvim": {
+            "key": "<C-S-v>",
+            "impl": "\"+p"
+          },
+          "vscode": {
+            "key": "ctrl+shift+v",
+            "command": "editor.action.clipboardPasteAction"
+          },
+          "zed": {
+            "key": "ctrl-shift-v",
+            "action": "editor::Paste"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Symbols, focus & workspace",
+      "maps": [
+        {
+          "id": "symbols.file",
+          "keys": "space c s",
+          "action": "Symbol outline (current file)",
+          "nvim": {
+            "key": "<leader>cs",
+            "impl": "aerial.nvim"
+          },
+          "vscode": {
+            "key": "space c s",
+            "command": "workbench.action.gotoSymbol"
+          },
+          "zed": {
+            "key": "space c s",
+            "action": "outline::Toggle"
+          }
+        },
+        {
+          "id": "symbols.workspace",
+          "keys": "space s S",
+          "action": "Workspace symbols",
+          "nvim": {
+            "key": "<leader>sS",
+            "impl": "telescope symbols"
+          },
+          "vscode": {
+            "key": "space s S",
+            "command": "workbench.action.showAllSymbols"
+          },
+          "zed": {
+            "key": "space s S",
+            "action": "project_symbols::Toggle"
+          }
+        },
+        {
+          "id": "symbols.keymaps",
+          "keys": "space s k",
+          "action": "Show keymaps",
+          "nvim": {
+            "key": "<leader>sk",
+            "impl": "which-key keymaps"
+          },
+          "vscode": {
+            "key": "space s k",
+            "command": "workbench.action.keybindingsReference"
+          },
+          "zed": {
+            "key": "space s k",
+            "action": "zed::OpenKeymap"
+          }
+        },
+        {
+          "id": "focus.zen",
+          "keys": "space u z",
+          "action": "Zen mode (distraction free)",
+          "nvim": {
+            "key": "<leader>uz",
+            "impl": "zen-mode.nvim"
+          },
+          "vscode": {
+            "key": "space u z",
+            "command": "workbench.action.toggleZenMode"
+          },
+          "zed": {
+            "key": "space u z",
+            "action": "workspace::ToggleZoom"
+          }
+        },
+        {
+          "id": "focus.undo.tree",
+          "keys": "space u u",
+          "action": "Undo tree",
+          "nvim": {
+            "key": "<leader>uu",
+            "impl": "undotree.nvim"
+          },
+          "vscode": null,
+          "zed": null
+        },
+        {
+          "id": "focus.markdown.preview",
+          "keys": "space c p",
+          "action": "Markdown preview in browser",
+          "nvim": {
+            "key": "<leader>cp",
+            "impl": "markdown-preview.nvim"
+          },
+          "vscode": {
+            "key": "space c p",
+            "command": "markdown.showPreviewToSide"
+          },
+          "zed": null,
+          "conditional": true
+        },
+        {
+          "id": "focus.quit",
+          "keys": "space q q",
+          "action": "Quit window (nvim quits everything)",
+          "nvim": {
+            "key": "<leader>qq",
+            "impl": "qa"
+          },
+          "vscode": {
+            "key": "space q q",
+            "command": "workbench.action.closeWindow"
+          },
+          "zed": {
+            "key": "space q q",
+            "action": "workspace::CloseWindow"
+          }
+        },
+        {
+          "id": "focus.quit.all",
+          "keys": "space q a",
+          "action": "Quit all editors",
+          "nvim": null,
+          "vscode": {
+            "key": "space q a",
+            "command": "workbench.action.closeAllEditors"
+          },
+          "zed": {
+            "key": "space q a",
+            "action": "pane::CloseAllItems"
+          }
+        },
+        {
+          "id": "focus.command_palette",
+          "keys": "space s p",
+          "action": "Command palette",
+          "nvim": null,
+          "vscode": {
+            "key": "space s p",
+            "command": "workbench.action.showCommands"
+          },
+          "zed": {
+            "key": "space s p",
+            "action": "command_palette::Toggle"
+          }
+        },
+        {
+          "id": "focus.jumplist",
+          "keys": "space s j",
+          "action": "Jump back (jumplist)",
+          "nvim": {
+            "key": "<leader>sj",
+            "impl": "snacks jumplist"
+          },
+          "vscode": {
+            "key": "space s j",
+            "command": "workbench.action.navigateBack"
+          },
+          "zed": {
+            "key": "space s j",
+            "action": "pane::GoBack"
+          }
+        },
+        {
+          "id": "focus.replace",
+          "keys": "space s r",
+          "action": "Search and replace",
+          "nvim": {
+            "key": "<leader>sr",
+            "impl": "snacks search & replace"
+          },
+          "vscode": {
+            "key": "space s r",
+            "command": "workbench.action.replaceInFiles"
+          },
+          "zed": {
+            "key": "space s r",
+            "action": "search::Replace"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Debug",
+      "maps": [
+        {
+          "id": "debug.breakpoint",
+          "keys": "space d b",
+          "action": "Toggle breakpoint",
+          "nvim": {
+            "key": "<leader>db",
+            "impl": "nvim-dap toggle_breakpoint"
+          },
+          "vscode": {
+            "key": "space d b",
+            "command": "editor.debug.action.toggleBreakpoint"
+          },
+          "zed": {
+            "key": "space d b",
+            "action": "editor::ToggleBreakpoint"
+          }
+        },
+        {
+          "id": "debug.continue",
+          "keys": "space d c",
+          "action": "Run / continue",
+          "nvim": {
+            "key": "<leader>dc",
+            "impl": "nvim-dap continue"
+          },
+          "vscode": {
+            "key": "space d c",
+            "command": "workbench.action.debug.start"
+          },
+          "zed": {
+            "key": "space d c",
+            "action": "debugger::Continue"
+          }
+        },
+        {
+          "id": "debug.step.into",
+          "keys": "space d i",
+          "action": "Step into",
+          "nvim": {
+            "key": "<leader>di",
+            "impl": "nvim-dap step_into"
+          },
+          "vscode": {
+            "key": "space d i",
+            "command": "workbench.action.debug.stepInto"
+          },
+          "zed": {
+            "key": "space d i",
+            "action": "debugger::StepInto"
+          }
+        },
+        {
+          "id": "debug.step.out",
+          "keys": "space d o",
+          "action": "Step out",
+          "nvim": {
+            "key": "<leader>do",
+            "impl": "nvim-dap step_out"
+          },
+          "vscode": {
+            "key": "space d o",
+            "command": "workbench.action.debug.stepOut"
+          },
+          "zed": {
+            "key": "space d o",
+            "action": "debugger::StepOut"
+          }
+        },
+        {
+          "id": "debug.step.over",
+          "keys": "space d O",
+          "action": "Step over",
+          "nvim": {
+            "key": "<leader>dO",
+            "impl": "nvim-dap step_over"
+          },
+          "vscode": {
+            "key": "space d O",
+            "command": "workbench.action.debug.stepOver"
+          },
+          "zed": {
+            "key": "space d O",
+            "action": "debugger::StepOver"
+          }
+        },
+        {
+          "id": "debug.terminate",
+          "keys": "space d t",
+          "action": "Terminate session",
+          "nvim": {
+            "key": "<leader>dt",
+            "impl": "nvim-dap terminate"
+          },
+          "vscode": {
+            "key": "space d t",
+            "command": "workbench.action.debug.disconnect"
+          },
+          "zed": {
+            "key": "space d t",
+            "action": "debugger::Stop"
+          }
+        },
+        {
+          "id": "debug.f5",
+          "keys": "F5",
+          "action": "Run / continue",
+          "nvim": {
+            "key": "<F5>",
+            "impl": "nvim-dap continue"
+          },
+          "vscode": {
+            "key": "F5",
+            "command": "workbench.action.debug.start"
+          },
+          "zed": null
+        },
+        {
+          "id": "debug.f9",
+          "keys": "F9",
+          "action": "Toggle breakpoint",
+          "nvim": {
+            "key": "<F9>",
+            "impl": "nvim-dap toggle_breakpoint"
+          },
+          "vscode": {
+            "key": "F9",
+            "command": "editor.debug.action.toggleBreakpoint"
+          },
+          "zed": null
+        },
+        {
+          "id": "debug.f10",
+          "keys": "F10",
+          "action": "Step over",
+          "nvim": {
+            "key": "<F10>",
+            "impl": "nvim-dap step_over"
+          },
+          "vscode": {
+            "key": "F10",
+            "command": "workbench.action.debug.stepOver"
+          },
+          "zed": null
+        },
+        {
+          "id": "debug.f11",
+          "keys": "F11",
+          "action": "Step into",
+          "nvim": {
+            "key": "<F11>",
+            "impl": "nvim-dap step_into"
+          },
+          "vscode": {
+            "key": "F11",
+            "command": "workbench.action.debug.stepInto"
+          },
+          "zed": null
+        }
+      ]
+    },
+    {
+      "name": "Terminal & tests",
+      "maps": [
+        {
+          "id": "terminal.toggle",
+          "keys": "space f t",
+          "action": "Toggle integrated terminal (project root)",
+          "nvim": {
+            "key": "<leader>ft",
+            "impl": "snacks terminal (root dir)"
+          },
+          "vscode": {
+            "key": "space f t",
+            "command": "workbench.action.terminal.toggleTerminal"
+          },
+          "zed": {
+            "key": "space f t",
+            "action": "terminal::Toggle"
+          }
+        },
+        {
+          "id": "terminal.toggle.cwd",
+          "keys": "space f T",
+          "action": "Toggle integrated terminal (working directory)",
+          "nvim": {
+            "key": "<leader>fT",
+            "impl": "snacks terminal (cwd)"
+          },
+          "vscode": {
+            "key": "space f T",
+            "command": "workbench.action.terminal.toggleTerminal"
+          },
+          "zed": {
+            "key": "space f T",
+            "action": "terminal::Toggle"
+          }
+        },
+        {
+          "id": "tests.run.file",
+          "keys": "space t t",
+          "action": "Run test file",
+          "nvim": {
+            "key": "<leader>tt",
+            "impl": "neotest run file"
+          },
+          "vscode": {
+            "key": "space t t",
+            "command": "workbench.view.testing"
+          },
+          "zed": null
+        },
+        {
+          "id": "tests.run.nearest",
+          "keys": "space t r",
+          "action": "Run nearest test",
+          "nvim": {
+            "key": "<leader>tr",
+            "impl": "neotest run nearest"
+          },
+          "vscode": {
+            "key": "space t r",
+            "command": "workbench.view.testing"
+          },
+          "zed": null
+        }
+      ]
+    }
+  ]
+}
