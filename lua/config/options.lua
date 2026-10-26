@@ -33,5 +33,9 @@ vim.opt.sidescrolloff = 12
 -- Rounded borders on hover/signature/diagnostic/float windows (nvim 0.11+).
 vim.o.winborder = "rounded"
 
+-- Mode cursor: block in normal/visual, vertical bar in insert,
+-- underscore in replace. Explicit so nothing can quietly override it.
+vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,sm:block"
+
 -- Theme, transparency and the :Theme command.
 require("config.theme").setup()

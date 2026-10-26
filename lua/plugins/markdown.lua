@@ -11,4 +11,13 @@ return {
     "MeanderingProgrammer/render-markdown.nvim",
     opts = { enabled = false },
   },
+  -- Kill markdownlint (MD013 line-length and friends) — prose is written
+  -- freely here; the 80-column rules are noise.
+  {
+    "mfussenegger/nvim-lint",
+    opts = function(_, opts)
+      opts.linters_by_ft = opts.linters_by_ft or {}
+      opts.linters_by_ft.markdown = nil
+    end,
+  },
 }
