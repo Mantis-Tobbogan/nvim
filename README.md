@@ -90,6 +90,12 @@ Shared look and feel: Catppuccin Mocha, CaskaydiaCove Nerd Font at 14.5px,
 relative line numbers, bar cursor, format on save, and one indent policy
 (Python 4 spaces, Go tabs of width 4, everything else 2).
 
+The terminal/editor chrome is **frosted glass**: kitty applies per-cell alpha,
+niri blurs the wallpaper, and Neovim keeps crisp text with rounded borders on
+hover, signature help, completion docs, pickers and which-key. See
+[`docs/GLASS-UI.md`](./docs/GLASS-UI.md) for the palette/alpha table and the
+one rule that keeps kitty, tmux and Neovim in sync.
+
 ## Layout
 
 ```
@@ -117,6 +123,7 @@ scripts/
   port-keymaps.py            # print the generated key tables
   render-parity-doc.py       # regenerate docs/EDITOR-PARITY.md
 docs/EDITOR-PARITY.md        # the full matrix
+docs/GLASS-UI.md             # palette, alpha, borders, tuning
 ```
 
 ## Custom mappings worth knowing
