@@ -86,6 +86,10 @@ use the light surfaces and darker text.
 
 ## Known limits
 
+- **VSCode and Zed stay opaque by design.** Their transparency is whole-window and
+  theme-scoped, not per-cell like kitty. They keep only theme-agnostic structural
+  settings (font, cursor, line height, scrolling); the glass layer is kitty +
+  tmux + Neovim only.
 - **tmux 3.8 has no rounded pane borders.** `pane-border-lines` only accepts
   `single`, `double`, `heavy`, `simple`, `number`, `spaces`, `none`. Pane
   borders are single-line with tinted colours; popups and menus *are* rounded.
