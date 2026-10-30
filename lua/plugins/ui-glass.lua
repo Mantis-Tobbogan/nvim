@@ -1,56 +1,80 @@
 -- Glass UI: frosted surfaces for floats/menus, rounded borders everywhere,
--- and a Catppuccin-tinted chrome.
+-- and a theme-neutral chrome.
 --
--- The tint colours are read from the active theme so the bars still look right
--- if you try another colorscheme; the terminal/tmux chrome intentionally stays
--- Catppuccin. Keep the alpha hexes in sync with kitty.conf and .tmux.conf:
---   #181825 mantle   @ 0.86 (floats, menus, sidebars)
---   #11111b crust    @ 0.80 (lualine, winbar, tmux status, kitty tabs)
---   #313244 surface0 @ 0.72 (selected completion/tab)
+-- The *surfaces* are deliberately fixed across colorschemes; only text,
+-- borders and accents are read from the active theme. That way switching from
+-- Catppuccin to Kanagawa (or anything else) changes colours, never the glass
+-- structure. Keep the surface hexes in sync with kitty.conf:
+--   #15151f / #f2f2f7  @ 0.86 (floats, menus, sidebars)
+--   #0f0f17 / #e8e8ef  @ 0.80 (lualine, winbar, tmux status, kitty tabs)
+--   #2a2a3a / #d8d8e2  @ 0.72 (selected completion/tab)
 
-local function color(name, attr, fallback)
-  local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = name, link = false })
-  local value = ok and hl[attr] or nil
-  if type(value) == "number" then
-    return string.format("#%06x", value)
-  end
-  return fallback
-end
-
-local function palette()
-  return {
-    mantle = color("NormalFloat", "bg", "#181825"),
-    crust = color("NormalSB", "bg", "#11111b"),
-    surface0 = color("PmenuSel", "bg", "#313244"),
-    surface1 = color("WinSeparator", "fg", "#45475a"),
-    overlay0 = color("FloatBorder", "fg", "#6c7086"),
-    text = color("Normal", "fg", "#cdd6f4"),
-    subtext0 = color("NormalNC", "fg", "#a6adc8"),
-    accent = color("FloatTitle", "fg", "#b4befe"),
-    green = color("String", "fg", "#a6e3a1"),
-    yellow = color("DiagnosticWarn", "fg", "#f9e2af"),
-    red = color("DiagnosticError", "fg", "#f38ba8"),
-    mauve = color("Statement", "fg", "#cba6f7"),
-  }
-end
+local theme = require("config.theme")
 
 local function lualine_theme()
-  local p = palette()
+  local c = theme.chrome()
   local section = {
-    a = { fg = p.crust, bg = p.accent, gui = "bold" },
-    b = { fg = p.text, bg = p.crust },
-    c = { fg = p.subtext0, bg = p.crust },
+    a = { fg = c.bar, bg = c.accent, gui = "bold" },
+    b = { fg = c.text, bg = c.bar },
+    c = { fg = c.border, bg = c.bar },
   }
-  local inactive = { fg = p.overlay0, bg = p.crust }
+  local inactive = { fg = c.border, bg = c.bar }
 
   return {
     normal = section,
-    insert = { a = { fg = p.crust, bg = p.green, gui = "bold" }, b = section.b, c = section.c },
-    visual = { a = { fg = p.crust, bg = p.mauve, gui = "bold" }, b = section.b, c = section.c },
-    replace = { a = { fg = p.crust, bg = p.red, gui = "bold" }, b = section.b, c = section.c },
-    command = { a = { fg = p.crust, bg = p.yellow, gui = "bold" }, b = section.b, c = section.c },
-    terminal = { a = { fg = p.crust, bg = p.green, gui = "bold" }, b = section.b, c = section.c },
+    insert = { a = { fg = c.bar, bg = c.green, gui = "bold" }, b = section.b, c = section.c },
+    visual = { a = { fg = c.bar, bg = c.mauve, gui = "bold" }, b = section.b, c = section.c },
+    replace = { a = { fg = c.bar, bg = c.red, gui = "bold" }, b = section.b, c = section.c },
+    command = { a = { fg = c.bar, bg = c.yellow, gui = "bold" }, b = section.b, c = section.c },
+    terminal = { a = { fg = c.bar, bg = c.green, gui = "bold" }, b = section.b, c = section.c },
     inactive = { a = inactive, b = inactive, c = inactive },
+  }
+end
+
+local function bufferline_highlights()
+  local c = theme.chrome()
+  return {
+    fill = { bg = c.bar },
+    background = { fg = c.border, bg = c.bar },
+    buffer = { fg = c.border, bg = c.bar },
+    buffer_visible = { fg = c.text, bg = c.bar },
+    buffer_selected = { fg = c.text, bg = c.selection, bold = true, italic = false },
+    numbers = { fg = c.border, bg = c.bar },
+    numbers_visible = { fg = c.border, bg = c.bar },
+    numbers_selected = { fg = c.text, bg = c.selection, bold = true },
+    close_button = { fg = c.border, bg = c.bar },
+    close_button_visible = { fg = c.border, bg = c.bar },
+    close_button_selected = { fg = c.red, bg = c.selection },
+    modified = { fg = c.yellow, bg = c.bar },
+    modified_visible = { fg = c.yellow, bg = c.bar },
+    modified_selected = { fg = c.yellow, bg = c.selection },
+    duplicate = { fg = c.yellow, bg = c.bar },
+    duplicate_visible = { fg = c.yellow, bg = c.bar },
+    duplicate_selected = { fg = c.yellow, bg = c.selection, bold = true },
+    separator = { fg = c.border, bg = c.bar },
+    separator_visible = { fg = c.border, bg = c.bar },
+    separator_selected = { fg = c.selection, bg = c.bar },
+    offset_separator = { fg = c.border, bg = c.bar },
+    indicator_selected = { fg = c.accent, bg = c.selection },
+    indicator_visible = { fg = c.border, bg = c.bar },
+    pick = { fg = c.bar, bg = c.accent, bold = true },
+    pick_visible = { fg = c.bar, bg = c.yellow, bold = true },
+    pick_selected = { fg = c.bar, bg = c.red, bold = true },
+    error = { fg = c.red, bg = c.bar },
+    error_visible = { fg = c.red, bg = c.bar },
+    error_selected = { fg = c.red, bg = c.selection, bold = true },
+    warning = { fg = c.yellow, bg = c.bar },
+    warning_visible = { fg = c.yellow, bg = c.bar },
+    warning_selected = { fg = c.yellow, bg = c.selection, bold = true },
+    info = { fg = c.accent, bg = c.bar },
+    info_visible = { fg = c.accent, bg = c.bar },
+    info_selected = { fg = c.accent, bg = c.selection, bold = true },
+    hint = { fg = c.green, bg = c.bar },
+    hint_visible = { fg = c.green, bg = c.bar },
+    hint_selected = { fg = c.green, bg = c.selection, bold = true },
+    tab = { fg = c.border, bg = c.bar },
+    tab_selected = { fg = c.text, bg = c.selection, bold = true },
+    tab_close = { fg = c.border, bg = c.bar },
   }
 end
 
@@ -99,7 +123,8 @@ return {
     "nvim-lualine/lualine.nvim",
     opts = function(_, opts)
       opts.options = opts.options or {}
-      opts.options.theme = lualine_theme()
+      -- A function is re-evaluated by lualine's ColorScheme autocommand.
+      opts.options.theme = lualine_theme
       opts.options.globalstatus = true
       -- Rounded powerline separators; keeps the bar thin and glassy.
       opts.options.section_separators = { left = "", right = "" }
@@ -110,54 +135,12 @@ return {
   {
     "akinsho/bufferline.nvim",
     opts = function(_, opts)
-      local p = palette()
       opts.options = opts.options or {}
       opts.options.themable = false
       opts.options.separator_style = "thin"
       opts.options.indicator = { style = "underline", icon = "▎" }
-      opts.highlights = {
-        fill = { bg = p.crust },
-        background = { fg = p.overlay0, bg = p.crust },
-        buffer = { fg = p.overlay0, bg = p.crust },
-        buffer_visible = { fg = p.subtext0, bg = p.crust },
-        buffer_selected = { fg = p.text, bg = p.surface0, bold = true, italic = false },
-        numbers = { fg = p.overlay0, bg = p.crust },
-        numbers_visible = { fg = p.overlay0, bg = p.crust },
-        numbers_selected = { fg = p.text, bg = p.surface0, bold = true },
-        close_button = { fg = p.overlay0, bg = p.crust },
-        close_button_visible = { fg = p.overlay0, bg = p.crust },
-        close_button_selected = { fg = p.red, bg = p.surface0 },
-        modified = { fg = p.yellow, bg = p.crust },
-        modified_visible = { fg = p.yellow, bg = p.crust },
-        modified_selected = { fg = p.yellow, bg = p.surface0 },
-        duplicate = { fg = p.yellow, bg = p.crust },
-        duplicate_visible = { fg = p.yellow, bg = p.crust },
-        duplicate_selected = { fg = p.yellow, bg = p.surface0, bold = true },
-        separator = { fg = p.surface1, bg = p.crust },
-        separator_visible = { fg = p.surface1, bg = p.crust },
-        separator_selected = { fg = p.surface0, bg = p.crust },
-        offset_separator = { fg = p.surface1, bg = p.crust },
-        indicator_selected = { fg = p.accent, bg = p.surface0 },
-        indicator_visible = { fg = p.overlay0, bg = p.crust },
-        pick = { fg = p.crust, bg = p.accent, bold = true },
-        pick_visible = { fg = p.crust, bg = p.yellow, bold = true },
-        pick_selected = { fg = p.crust, bg = p.red, bold = true },
-        error = { fg = p.red, bg = p.crust },
-        error_visible = { fg = p.red, bg = p.crust },
-        error_selected = { fg = p.red, bg = p.surface0, bold = true },
-        warning = { fg = p.yellow, bg = p.crust },
-        warning_visible = { fg = p.yellow, bg = p.crust },
-        warning_selected = { fg = p.yellow, bg = p.surface0, bold = true },
-        info = { fg = p.accent, bg = p.crust },
-        info_visible = { fg = p.accent, bg = p.crust },
-        info_selected = { fg = p.accent, bg = p.surface0, bold = true },
-        hint = { fg = p.green, bg = p.crust },
-        hint_visible = { fg = p.green, bg = p.crust },
-        hint_selected = { fg = p.green, bg = p.surface0, bold = true },
-        tab = { fg = p.overlay0, bg = p.crust },
-        tab_selected = { fg = p.text, bg = p.surface0, bold = true },
-        tab_close = { fg = p.overlay0, bg = p.crust },
-      }
+      -- Bufferline re-runs this function on ColorScheme.
+      opts.highlights = bufferline_highlights
     end,
   },
 

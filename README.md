@@ -86,15 +86,16 @@ LazyVim gates its default keymaps on), reads the rendered VSCode and Zed
 configs, and also greps the installed VSCode/Zed binaries to prove every
 command id and action name really exists.
 
-Shared look and feel: Catppuccin Mocha, CaskaydiaCove Nerd Font at 14.5px,
-relative line numbers, bar cursor, format on save, and one indent policy
+Shared look and feel: Catppuccin Mocha by default, CaskaydiaCove Nerd Font at
+14.5px, relative line numbers, bar cursor, format on save, and one indent policy
 (Python 4 spaces, Go tabs of width 4, everything else 2).
 
-The terminal/editor chrome is **frosted glass**: kitty applies per-cell alpha,
-niri blurs the wallpaper, and Neovim keeps crisp text with rounded borders on
-hover, signature help, completion docs, pickers and which-key. See
-[`docs/GLASS-UI.md`](./docs/GLASS-UI.md) for the palette/alpha table and the
-one rule that keeps kitty, tmux and Neovim in sync.
+The terminal/editor chrome is **theme-neutral frosted glass**: kitty applies
+per-cell alpha, niri blurs the wallpaper, and Neovim keeps crisp text with
+rounded borders on hover, signature help, completion docs, pickers and
+which-key. The glass surfaces are fixed; `:Theme` changes text, borders and
+accents only. See [`docs/GLASS-UI.md`](./docs/GLASS-UI.md) for the surface/alpha
+table and the one rule that keeps kitty, tmux and Neovim in sync.
 
 ## Layout
 
