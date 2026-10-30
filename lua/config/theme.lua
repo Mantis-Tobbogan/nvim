@@ -41,49 +41,16 @@ M.themes = {
 -- Highlight groups that get a transparent background when
 -- M.config.transparent is true.
 local transparent_groups = {
-  -- Core UI
+  -- Only surfaces that should show the blurred wallpaper. Floats, menus,
+  -- sidebars and bars keep a real (frosted) background; they are coloured by
+  -- the Catppuccin glass highlights in lua/plugins/colorscheme.lua.
   "Normal",
-  "NormalFloat",
   "NormalNC",
-  "FloatBorder",
-  "Pmenu",
   "Terminal",
   "EndOfBuffer",
   "FoldColumn",
   "Folded",
   "SignColumn",
-  "WhichKeyFloat",
-  -- Telescope
-  "TelescopeBorder",
-  "TelescopeNormal",
-  "TelescopePromptBorder",
-  "TelescopePromptTitle",
-  -- neo-tree
-  "NeoTreeNormal",
-  "NeoTreeNormalNC",
-  "NeoTreeVertSplit",
-  "NeoTreeWinSeparator",
-  "NeoTreeEndOfBuffer",
-  -- nvim-tree
-  "NvimTreeNormal",
-  "NvimTreeVertSplit",
-  "NvimTreeEndOfBuffer",
-  -- snacks.nvim notifier
-  "NotifyINFOBody",
-  "NotifyERRORBody",
-  "NotifyWARNBody",
-  "NotifyTRACEBody",
-  "NotifyDEBUGBody",
-  "NotifyINFOTitle",
-  "NotifyERRORTitle",
-  "NotifyWARNTitle",
-  "NotifyTRACETitle",
-  "NotifyDEBUGTitle",
-  "NotifyINFOBorder",
-  "NotifyERRORBorder",
-  "NotifyWARNBorder",
-  "NotifyTRACEBorder",
-  "NotifyDEBUGBorder",
 }
 
 local function apply_transparency()
@@ -91,7 +58,12 @@ local function apply_transparency()
     return
   end
   for _, group in ipairs(transparent_groups) do
-    vim.api.nvim_set_hl(0, group, { bg = "none" })
+    -- Preserve the theme's foreground/style: nvim_set_hl replaces the whole
+    -- group, so setting only { bg = "none" } would wipe the colors.
+    local hl = vim.api.nvim_get_hl(0, { name = group, link = false })
+    hl.bg = "none"
+    hl.link = nil
+    vim.api.nvim_set_hl(0, group, hl)
   end
 end
 

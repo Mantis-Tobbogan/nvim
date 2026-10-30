@@ -31,7 +31,16 @@ vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 12
 
 -- Rounded borders on hover/signature/diagnostic/float windows (nvim 0.11+).
+-- `pumborder` is the 0.12 equivalent for the native completion/mouse menu.
+-- Keep both explicit: noice and blink set their own borders, and we want the
+-- glass chrome to be consistent even if a plugin leaves border unset.
 vim.o.winborder = "rounded"
+vim.o.pumborder = "rounded"
+
+-- No text blending. The frosted look comes from kitty's per-cell alpha
+-- (`transparent_background_colors`), so floats stay crisp and readable.
+vim.o.winblend = 0
+vim.o.pumblend = 0
 
 -- Mode cursor: block in normal/visual, vertical bar in insert,
 -- underscore in replace. Explicit so nothing can quietly override it.

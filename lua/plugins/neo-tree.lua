@@ -2,6 +2,9 @@ return {
   "nvim-neo-tree/neo-tree.nvim",
   opts = {
     window = {
+      -- A little narrower than the LazyVim default; the glass sidebar should
+      -- feel like a rail, not a second editor.
+      width = 30,
       mappings = {
         -- your custom mappings if any
       },
